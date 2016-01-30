@@ -32,8 +32,9 @@ module.exports = function Character(io, config, game, socket, playerNum) {
     this.takeDamage = function takeDamage(damage) {
         self.health -= damage;
 
-        if (self.health < 0) {
+        if (self.health <= 0) {
             self.health = 0;
+            game.end(self.playerNum);
         }
 
         io.to(game.getId()).emit('player health changed', self.playerNum, self.health);

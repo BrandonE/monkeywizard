@@ -3,11 +3,11 @@
 var uuid = require('uuid'),
     Character = require(__dirname + '/character');
 
-module.exports = function Game(io, config, num) {
+module.exports = function Game(io, config, games) {
     var self = this;
 
     this.id = uuid.v4();
-    this.num = num;
+    this.num = games.length + 1;
     this.players = [null, null];
     this.turns = [];
     this.nextTurn = [null, null];
@@ -59,6 +59,10 @@ module.exports = function Game(io, config, num) {
             playerNum;
 
         if (player) {
+            if (self.players[0] && self.players[1]) {
+                self.destroy();
+            }
+
             playerNum = player.getPlayerNum();
             delete self.players[playerNum - 1];
 
@@ -97,6 +101,25 @@ module.exports = function Game(io, config, num) {
 
             self.nextTurn = [null, null];
         }
+    };
+
+    this.end = function end(losingPlayerNum) {
+        io.to(self.id).emit('end', losingPlayerNum, self.turns);
+        self.destroy();
+    };
+
+    this.destroy = function destroy() {
+        games = games.splice(self.num - 1, 1);
+
+        if (self.players[0]) {
+            delete self.players[0];
+        }
+
+        if (self.players[1]) {
+            delete self.players[1];
+        }
+
+        delete this;
     };
 
     this.toSendable = function toSendable() {

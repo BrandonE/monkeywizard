@@ -12,7 +12,7 @@ module.exports = function(config) {
                 var game = getAvailableGame();
 
                 if (!game) {
-                    game = new Game(io, config, games.length + 1);
+                    game = new Game(io, config, games);
                     games.push(game);
                 }
 
