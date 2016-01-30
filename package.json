@@ -1,0 +1,34 @@
+{
+  "name": "monkeywizard",
+  "version": "1.0.0",
+  "description": "Monkey Wizard: Simian Sorcery - Online Bullet Curtain Battle Game https://github.com/BrandonE/monkeywizard",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "monkey",
+    "wizard",
+    "simian",
+    "sorcery",
+    "online",
+    "game",
+    "bullet",
+    "curtain",
+    "battle"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:BrandonE/monkeywizard.git"
+  },
+  "author": "Brandon Evans",
+  "dependencies": {
+    "express": "^4.12.4",
+    "socket.io": "^1.3.5",
+      "uuid": "^2.0.1"
+  },
+  "engines": {
+    "node": "0.12.2"
+  }
+}
