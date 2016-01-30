@@ -41,7 +41,8 @@ $(document).ready
 
                     if (player) {
                         healthList += '<li>Player #' + playerNum + ': ' +
-                            '<span id="health' + playerNum + '">'+ player.health + '</span></li>';
+                            '<span id="health' + playerNum + '">'+ player.health + '</span>' +
+                            ' / ' + config.maxHealth + '</li>';
                     }
                 }
 
