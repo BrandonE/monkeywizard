@@ -1,0 +1,20 @@
+{"frames": {
+
+"Monkey_Wizard":
+{
+	"frame": {"x":1,"y":1,"w":256,"h":225},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":16,"w":256,"h":225},
+	"sourceSize": {"w":256,"h":256}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "sprites.png",
+	"format": "RGBA8888",
+	"size": {"w":258,"h":227},
+	"scale": "0.25",
+	"smartupdate": "$TexturePacker:SmartUpdate:a90981e2922c068e839f77b36a832167:5e81636dfac0b12e0b07fca2f9d28cc3:1eabdf11f75e3a4fe3147baf7b5be24b$"
+}
+}
