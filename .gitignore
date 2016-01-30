@@ -8,3 +8,6 @@
 .idea/workspace.xml
 .idea/dictionaries/brandonevans.xml
 .idea/scopes/scope_settings.xml
+client/build/
+*/node_modules/
+client/app/vendor/

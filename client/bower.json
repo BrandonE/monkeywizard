@@ -1,0 +1,19 @@
+{
+  "name": "StroidRage",
+  "version": "0.0.0",
+  "authors": [
+    "Sean Spradlin <seanspradlin@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.4.3"
+  }
+}
