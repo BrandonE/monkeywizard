@@ -4,7 +4,7 @@
 namespace Loader {
   export class State extends Phaser.State {
     preload() {
-      // load assets here
+      this.load.atlasJSONHash('sprites', 'assets/images/sprites.png', 'assets/images/sprites.json');
     }
 
     create() {
