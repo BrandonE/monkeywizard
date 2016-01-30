@@ -97,7 +97,8 @@ module.exports = function Game(io, config, num) {
         }
 
         return {
-            players   : playersToSend
+            id      : self.id,
+            players : playersToSend
         };
     };
 };

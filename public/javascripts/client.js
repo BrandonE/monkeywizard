@@ -23,9 +23,12 @@ $(document).ready
                     }
                 } else {
                     game = {
+                        id              : gameSent.id,
                         players         : gameSent.players,
                         clientPlayerNum : playerNum
                     };
+
+                    $('#gameId').text(game.id);
 
                     if (playerNum) {
                         $('#playerNum').text(playerNum);
