@@ -9,6 +9,8 @@ module.exports = function Game(io, config, num) {
     this.id = uuid.v4();
     this.num = num;
     this.players = [null, null];
+    this.turns = [];
+    this.nextTurn = [null, null];
 
     this.getId = function getId() {
         return self.id;
@@ -79,6 +81,22 @@ module.exports = function Game(io, config, num) {
         message += ' Game #' + self.num + ' (' + self.id + ')';
 
         return message;
+    };
+
+    this.attack = function attack(attack, playerNum) {
+        // Prepare to send the attack to the other player.
+        if (playerNum === 1) {
+            self.nextTurn[1] = attack
+        } else {
+            self.nextTurn[0] = attack;
+        }
+
+        if (self.nextTurn[0] && self.nextTurn[1]) {
+            self.turns.push(self.nextTurn);
+            io.to(self.id).emit('turn', self.nextTurn);
+
+            self.nextTurn = [null, null];
+        }
     };
 
     this.toSendable = function toSendable() {

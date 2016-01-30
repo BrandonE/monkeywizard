@@ -61,6 +61,12 @@ $(document).ready
                 $('#activeConnections').text(activeConnections);
             });
 
+            socket.on('turn', function(turn) {
+                if (game.clientPlayerNum) {
+                    console.log('Received attack: ' + JSON.stringify(turn[game.clientPlayerNum - 1]));
+                }
+            });
+
             socket.on('player health changed', function(playerNum, health) {
                 var player;
 
@@ -109,6 +115,48 @@ $(document).ready
                     case 13:
                         // Take One Damage (Enter: Debug Purposes)
                         socket.emit('player take damage', 1);
+                        break;
+
+                    case 32:
+                        // Send Attack (Space: Debug Purposes)
+                        socket.emit(
+                            'attack',
+                            [
+                                // Wave One
+                                [
+                                    // Bullet 1-1
+                                    {
+                                        angle : 0,
+                                        x     : game.clientPlayerNum,
+                                        y     : game.clientPlayerNum
+                                    },
+
+                                    // Bullet 1-2
+                                    {
+                                        angle : 90,
+                                        x     : game.clientPlayerNum,
+                                        y     : game.clientPlayerNum
+                                    }
+                                ],
+
+                                // Wave Two
+                                [
+                                    // Bullet 2-1
+                                    {
+                                        angle : 180,
+                                        x     : game.clientPlayerNum,
+                                        y     : game.clientPlayerNum
+                                    },
+
+                                    // Bullet 2-2
+                                    {
+                                        angle : 270,
+                                        x     : game.clientPlayerNum,
+                                        y     : game.clientPlayerNum
+                                    }
+                                ]
+                            ]
+                        );
                         break;
 
                     default:
