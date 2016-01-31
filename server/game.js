@@ -90,7 +90,7 @@ module.exports = function Game(io, config, games) {
     this.attack = function attack(attack, playerNum) {
         // Prepare to send the attack to the other player.
         if (playerNum === 1) {
-            self.nextTurn[1] = attack
+            self.nextTurn[1] = attack;
         } else {
             self.nextTurn[0] = attack;
         }
@@ -118,8 +118,6 @@ module.exports = function Game(io, config, games) {
         if (self.players[1]) {
             delete self.players[1];
         }
-
-        delete this;
     };
 
     this.toSendable = function toSendable() {

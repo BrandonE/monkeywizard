@@ -8,7 +8,7 @@ module.exports = function(config) {
 
     return {
         attach : function attach(io) {
-            io.on('connection', function (socket) {
+            io.on('connection', function(socket) {
                 var game = getAvailableGame();
 
                 if (!game) {
