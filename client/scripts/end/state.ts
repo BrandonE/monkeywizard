@@ -3,8 +3,11 @@
 
 namespace End {
     export class State extends Phaser.State {
+        message: string;
+        turns;
+
         create() {
-            console.log('Score displayed');
+            this.add.text(500, 360, this.message, {});
         }
     }
 }

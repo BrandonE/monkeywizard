@@ -1,0 +1,5 @@
+{
+    "port"      :  8080,
+    "maxHealth" :  20,
+    "maxBananas" : 30
+}

@@ -3,18 +3,22 @@
 
 namespace Game {
     export class State extends Phaser.State {
+        config: { port: number, maxHealth: number, maxBananas: number};
+        id: number;
+        players;
+        clientPlayerNum: number;
         player: Player;
         pointer: Phaser.Pointer;
         waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]];
-        attacking: boolean = true;
+        attacking: boolean;
         banana: number = 0;
-        maxBanana: number = 30;
         io: SocketIOClientStatic;
-        socket: SocketIOClient.Socket = io.connect();
+        socket: SocketIOClient.Socket;
 
         create() {
             var self = this;
 
+            this.config = this.cache.getJSON('config');
             this.attacking = true;
             console.log('Attack');
 
@@ -27,9 +31,116 @@ namespace Game {
                 }
             }, this);
 
+            this.socket = io.connect();
+
+            this.socket.on('user connected', function(playerNum, gameSent) {
+                var player,
+                    playerIndex,
+                    healthList = '';
+
+                if (self.id) {
+                    if (playerNum) {
+                        playerIndex = playerNum - 1;
+                        player = gameSent.players[playerIndex];
+
+                        self.players[playerIndex] = player;
+                    }
+                } else {
+                    self.id = gameSent.id;
+                    self.players = gameSent.players;
+                    self.clientPlayerNum = playerNum;
+
+                    self.add.text(0, 0, 'Game ID: ' + self.id, {});
+
+                    if (playerNum) {
+                        self.add.text(0, 25, 'Player #' + playerNum, {});
+                    }
+                }
+
+                for (playerIndex = 0; playerIndex < self.players.length; playerIndex++) {
+                    player = self.players[playerIndex];
+                    playerNum = (playerIndex + 1);
+
+                    if (player) {
+                        healthList += '<li>Player #' + playerNum + ': ' +
+                            '<span id="health' + playerNum + '">'+ player.health + '</span>' +
+                            ' / ' + self.config.maxHealth + '</li>';
+                    }
+                }
+
+                if (self.players[0]) {
+                    self.add.text(
+                        0,
+                        self.game.height - 40,
+                        'Player 1 Health: ' + self.players[0].health + ' / ' + self.config.maxHealth,
+                        {}
+                    );
+                }
+
+                if (self.players[1]) {
+                    self.add.text(
+                        self.game.width - 300,
+                        self.game.height - 40,
+                        'Player 2 Health: ' + self.players[1].health + ' / ' + self.config.maxHealth,
+                        {}
+                    );
+                }
+            });
+
+            this.socket.on('user disconnected', function(playerNum) {
+                var playerIndex;
+
+                if (playerNum) {
+                    if (self.players[0] && self.players[1]) {
+                        self.game.state.states.End.message = 'Player #' + playerNum + ' has forfeited!';
+                        self.game.state.states.End.turns = null;
+                        self.game.state.start('End');
+                    }
+
+                    playerIndex = playerNum - 1;
+                    delete self.players[playerIndex];
+                }
+            });
+
+            this.socket.on('active connections', function(activeConnections) {
+                self.add.text(0, 50, 'Active Connections: ' + activeConnections.toString(), {});
+            });
+
+            this.socket.on('turn', function(turn) {
+                var waves;
+
+                if (self.clientPlayerNum) {
+                    waves = turn[self.clientPlayerNum - 1];
+                    self.defend(waves);
+                }
+            });
+
+            this.socket.on('player health changed', function(playerNum, health) {
+                var player,
+                    x;
+
+                if (playerNum) {
+                    player = self.players[playerNum - 1];
+                    player.health = health;
+                    x = (playerNum === 1) ? 0 : self.game.width - 300;
+
+                    self.add.text(
+                        x,
+                        self.game.height - 40,
+                        'Player 2 Health: ' + player.health + ' / ' + self.config.maxHealth,
+                        {}
+                    );
+                }
+            });
+
+            this.socket.on('end', function(losingPlayerNum, turns) {
+                self.game.state.states.End.message = 'Player #' + losingPlayerNum + ' has been defeated!';
+                self.game.state.states.End.turns = turns;
+                self.game.state.start('End');
+            });
+
             setTimeout(function() {
-                self.attacking = false;
-                self.defend(self.waves);
+                self.attackTimeout(self);
             }, 10000);
 
         }
@@ -40,7 +151,7 @@ namespace Game {
                 destinationY: number,
                 graphics: Phaser.Graphics;
 
-            if (this.banana < this.maxBanana) {
+            if (this.banana < this.config.maxBananas) {
                 angle = this.getAngle(this.player.x, this.player.y, this.pointer.x, this.pointer.y);
 
                 this.waves[0].push({
@@ -82,6 +193,11 @@ namespace Game {
 
                 this.add.text(this.player.x - 10, this.player.y, this.banana.toString(), {});
             }
+        }
+
+        attackTimeout(self) {
+            self.attacking = false;
+            self.socket.emit('player attack', self.waves);
         }
 
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
