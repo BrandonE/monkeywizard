@@ -21,6 +21,7 @@ namespace Game {
         gameStatusText : Phaser.Text;
         player1HealthText: Phaser.Text;
         player2HealthText: Phaser.Text;
+        bananaCounter: Phaser.Text;
         attackGraphics = [];
         timeout;
 
@@ -85,7 +86,7 @@ namespace Game {
                     if (self.playerNumText) {
                         self.playerNumText.kill();
                     }
-                    
+
                     self.playerNumText = self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
                 }
 
@@ -222,6 +223,7 @@ namespace Game {
                 });
 
                 this.banana++;
+                this.setBananaCounter();
 
                 graphics = this.add.graphics(100, 100);
                 graphics.beginFill(0xFF3300);
@@ -273,7 +275,6 @@ namespace Game {
             var self = this;
             self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
-
             if (this.gameStatusText) {
                 this.gameStatusText.kill();
             }
@@ -281,6 +282,7 @@ namespace Game {
             this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Attack!', self.fontStyle);
             this.attacking = true;
             this.banana = 0;
+            this.setBananaCounter();
 
             this.timeout = setTimeout(function() {
                 self.attacking = false;
@@ -338,6 +340,19 @@ namespace Game {
             this.sound.pause();
 
             this.game.state.start('End');
+        }
+
+        setBananaCounter() {
+            if (this.bananaCounter) {
+                this.bananaCounter.kill();
+            }
+            
+            this.bananaCounter = this.add.text(
+                this.game.width - 290,
+                0,
+                'Banana Count: ' + (this.config.maxBananas - this.banana.toString()) + ' / ' + this.config.maxBananas,
+                this.fontStyle
+            );
         }
 
         getAngle(x1: number, y1: number, x2: number, y2: number) {
