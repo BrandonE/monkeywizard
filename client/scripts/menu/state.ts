@@ -3,11 +3,20 @@
 
 namespace Menu {
     export class State extends Phaser.State {
+        text: Phaser.Text;
+        monkeyFace: Phaser.Sprite;
+        banana1L: Phaser.Sprite;
+        banana2L: Phaser.Sprite;
+        banana3L: Phaser.Sprite;
+        banana1R: Phaser.Sprite;
+        banana2R: Phaser.Sprite;
+        banana3R: Phaser.Sprite;
+
         create() {
             console.log('Menu Loaded');
             this.game.add.sprite(0, 0, 'backdrop');
-            this.Text = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'Monkey Wizards\n - Simian Sorcery -\n\nClick to Start!', { font: "35px Arial", fill: "#ffffff", align: "center" });
-            this.Text.anchor.setTo(0.5);
+            this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'Monkey Wizards\n - Simian Sorcery -\n\nClick to Start!', { font: "35px Arial", fill: "#ffffff", align: "center" });
+            this.text.anchor.setTo(0.5);
 
             this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard');
             this.monkeyFace.anchor.setTo(0.5);
