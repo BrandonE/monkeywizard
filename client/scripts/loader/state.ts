@@ -7,6 +7,7 @@ namespace Loader {
             this.load.atlasJSONHash('sprites', 'assets/images/sprites.png', 'assets/images/sprites.json');
             this.load.json('config', 'assets/config.json');
             this.load.image('backdrop', 'assets/images/backdrop.jpg');
+            this.load.audio('background-music', 'assets/sound/background-music.mp3')
         }
 
         create() {

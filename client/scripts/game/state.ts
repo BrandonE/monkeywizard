@@ -23,6 +23,8 @@ namespace Game {
 
         create() {
             var self = this;
+            
+            this.sound.play('background-music', 100, true);
 
             var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
             background.height = this.game.height;
