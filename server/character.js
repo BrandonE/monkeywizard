@@ -29,15 +29,44 @@ module.exports = function Character(io, config, game, socket, playerNum) {
         io.to(game.getId()).emit('player health changed', self.playerNum, self.health);
     };
 
-    this.takeDamage = function takeDamage(damage) {
-        self.health -= damage;
+    this.hit = function hit(waveIndex, bananaIndex, x, y) {
+        var turn = game.turns[game.turns.length - 1],
+            playerTurn,
+            wave,
+            banana,
+            originalHealth = self.health;
 
-        if (self.health <= 0) {
-            self.health = 0;
-            game.end(self.playerNum);
+        if (turn) {
+            playerTurn = turn[self.playerNum - 1];
+
+            if (playerTurn) {
+                wave = playerTurn[waveIndex];
+
+                if (wave) {
+                    banana = wave[bananaIndex];
+
+                    if (banana) {
+                        switch (banana.type) {
+                            default:
+                                self.health -= 1;
+                                break;
+                        }
+
+                        if (self.health !== originalHealth) {
+                            if (self.health <= 0) {
+                                self.health = 0;
+                                game.end(self.playerNum);
+                            }
+
+                            io.to(game.getId()).emit('player health changed', self.playerNum, self.health);
+                        }
+
+                        banana.hit_x = x;
+                        banana.hit_y = y;
+                    }
+                }
+            }
         }
-
-        io.to(game.getId()).emit('player health changed', self.playerNum, self.health);
     };
 
     this.toSendable = function toSendable() {

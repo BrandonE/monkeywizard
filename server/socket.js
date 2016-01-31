@@ -30,16 +30,16 @@ module.exports = function(config) {
                     console.log('Active Connections: ' + activeConnections);
                 });
 
-                socket.on('attack', function(attack) {
+                socket.on('player attack', function(attack) {
                     var player = game.getPlayerById(socket.id);
                     game.attack(attack, player.getPlayerNum());
                 });
 
-                socket.on('player take damage', function(damage) {
+                socket.on('player hit', function(waveIndex, bananaIndex, x, y) {
                     var player = game.getPlayerById(socket.id);
 
                     if (player && player.getHealth()) {
-                        player.takeDamage(damage);
+                        player.hit(waveIndex, bananaIndex, x, y);
                     }
                 });
             });

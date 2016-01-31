@@ -130,13 +130,13 @@ $(document).ready
 
                         case 13:
                             // Take One Damage (Enter: Debug Purposes)
-                            socket.emit('player take damage', 1);
+                            socket.emit('player hit', 0, 0, 100, 100);
                             break;
 
                         case 32:
                             // Send Attack (Space: Debug Purposes)
                             socket.emit(
-                                'attack',
+                                'player attack',
                                 [
                                     // Wave One
                                     [
