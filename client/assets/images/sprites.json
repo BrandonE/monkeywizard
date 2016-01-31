@@ -48,7 +48,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":2,"h":2},
 	"sourceSize": {"w":2,"h":2}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_1B":
+"Monkey_Minion/Back/Monkey_Minion_1B":
 {
 	"frame": {"x":1,"y":259,"w":128,"h":115},
 	"rotated": false,
@@ -56,7 +56,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_1R":
+"Monkey_Minion/Back/Monkey_Minion_1R":
 {
 	"frame": {"x":131,"y":259,"w":128,"h":115},
 	"rotated": false,
@@ -64,7 +64,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_1Y":
+"Monkey_Minion/Back/Monkey_Minion_1Y":
 {
 	"frame": {"x":519,"y":124,"w":128,"h":115},
 	"rotated": false,
@@ -72,7 +72,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_2B":
+"Monkey_Minion/Back/Monkey_Minion_2B":
 {
 	"frame": {"x":521,"y":241,"w":128,"h":115},
 	"rotated": false,
@@ -80,7 +80,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_2R":
+"Monkey_Minion/Back/Monkey_Minion_2R":
 {
 	"frame": {"x":649,"y":1,"w":128,"h":115},
 	"rotated": false,
@@ -88,7 +88,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_2Y":
+"Monkey_Minion/Back/Monkey_Minion_2Y":
 {
 	"frame": {"x":649,"y":118,"w":128,"h":115},
 	"rotated": false,
@@ -96,7 +96,7 @@
 	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":115},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Minion/Back/Monkey_Minion_back_3":
+"Monkey_Minion/Back/Monkey_Minion_3Y":
 {
 	"frame": {"x":651,"y":235,"w":128,"h":115},
 	"rotated": false,

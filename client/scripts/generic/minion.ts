@@ -8,7 +8,9 @@ namespace Generic {
         constructor(
             state: Phaser.State, waveIndex, bananaIndex: number, x: number, y: number, player_x: number, player_y
         ) {
-            super(state.game, x - 50, y - 20, 'sprites', 'Monkey_Minion/Front/Monkey_Minion_1Y');
+            var side = (y > state.game.height / 2) ? 'Back' : 'Front';
+
+            super(state.game, x - 50, y - 20, 'sprites', 'Monkey_Minion/' + side + '/Monkey_Minion_1Y');
 
             var self = this;
 
