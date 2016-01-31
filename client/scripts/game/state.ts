@@ -117,15 +117,10 @@ namespace Game {
 
                 if (playerNum) {
                     if (self.players[0] && self.players[1]) {
-                        self.socket.close();
-
-                        if (self.timeout) {
-                            clearTimeout(self.timeout);
-                        }
-
                         self.game.state.states.End.message = 'Player #' + playerNum + ' has forfeited!';
                         self.game.state.states.End.turns = null;
-                        self.game.state.start('End');
+
+                        self.end();
                     }
 
                     playerIndex = playerNum - 1;
@@ -187,15 +182,10 @@ namespace Game {
             });
 
             this.socket.on('end', function(losingPlayerNum, turns) {
-                self.socket.close();
-
-                if (self.timeout) {
-                    clearTimeout(self.timeout);
-                }
-
                 self.game.state.states.End.message = 'Player #' + losingPlayerNum + ' has been defeated!';
                 self.game.state.states.End.turns = turns;
-                self.game.state.start('End');
+
+                self.end();
             });
         }
 
@@ -315,6 +305,16 @@ namespace Game {
             this.timeout = setTimeout(function() {
                 self.attackStart();
             }, 5000);
+        }
+
+        end() {
+            this.socket.close();
+
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
+
+            this.game.state.start('End');
         }
 
         getAngle(x1: number, y1: number, x2: number, y2: number) {
