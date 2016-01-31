@@ -22,19 +22,19 @@ namespace Menu {
             this.monkeyFace.anchor.setTo(0.5);
             this.monkeyFace.scale.setTo(1);
 
-            this.banana1L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY - 200, 'sprites', 'Banana/Banana1');
+            this.banana1L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY - 200, 'sprites', 'Banana/Banana4');
             this.banana1L.anchor.setTo(0.5);
 
-            this.banana2L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY, 'sprites', 'Banana/Banana2');
+            this.banana2L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY, 'sprites', 'Banana/Banana1');
             this.banana2L.anchor.setTo(0.5);
 
             this.banana3L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY + 200, 'sprites', 'Banana/Banana3');
             this.banana3L.anchor.setTo(0.5);
 
-            this.banana1R = this.game.add.sprite(this.game.world.centerX +180, this.game.world.centerY - 200, 'sprites', 'Banana/Banana1');
+            this.banana1R = this.game.add.sprite(this.game.world.centerX +180, this.game.world.centerY - 200, 'sprites', 'Banana/Banana4');
             this.banana1R.anchor.setTo(0.5);
 
-            this.banana2R = this.game.add.sprite(this.game.world.centerX +180, this.game.world.centerY, 'sprites', 'Banana/Banana2');
+            this.banana2R = this.game.add.sprite(this.game.world.centerX +180, this.game.world.centerY, 'sprites', 'Banana/Banana1');
             this.banana2R.anchor.setTo(0.5);
 
             this.banana3R = this.game.add.sprite(this.game.world.centerX +180, this.game.world.centerY + 200, 'sprites', 'Banana/Banana3');
