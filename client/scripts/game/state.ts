@@ -14,6 +14,10 @@ namespace Game {
         banana: number;
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
+        activeConnectionsText: Phaser.Text;
+        player1HealthText: Phaser.Text;
+        player2HealthText: Phaser.Text;
+        attackGraphics = [];
 
         create() {
             var self = this;
@@ -73,7 +77,11 @@ namespace Game {
                     text = 'Waiting for Player 1...';
                 }
 
-                self.add.text(
+                if (self.player1HealthText) {
+                    self.player1HealthText.kill();
+                }
+
+                self.player1HealthText = self.add.text(
                     0,
                     self.game.height - 40,
                     text,
@@ -86,8 +94,12 @@ namespace Game {
                     text = 'Waiting for Player 2...';
                 }
 
-                self.add.text(
-                    self.game.width - 300,
+                if (self.player2HealthText) {
+                    self.player2HealthText.kill();
+                }
+
+                self.player2HealthText = self.add.text(
+                    self.game.width - 310,
                     self.game.height - 40,
                     text,
                     {}
@@ -114,7 +126,13 @@ namespace Game {
             });
 
             this.socket.on('active connections', function(activeConnections) {
-                self.add.text(0, 50, 'Active Connections: ' + activeConnections.toString(), {});
+                if (self.activeConnectionsText) {
+                    self.activeConnectionsText.kill();
+                }
+
+                self.activeConnectionsText = self.add.text(
+                    0, 50, 'Active Connections: ' + activeConnections.toString(), {}
+                );
             });
 
             this.socket.on('turn', function(turn) {
@@ -133,14 +151,30 @@ namespace Game {
                 if (playerNum) {
                     player = self.players[playerNum - 1];
                     player.health = health;
-                    x = (playerNum === 1) ? 0 : self.game.width - 300;
 
-                    self.add.text(
-                        x,
-                        self.game.height - 40,
-                        'Player 2 Health: ' + player.health + ' / ' + self.config.maxHealth,
-                        {}
-                    );
+                    if (playerNum === 1) {
+                        if (self.player1HealthText) {
+                            self.player1HealthText.kill();
+                        }
+
+                        self.player1HealthText = self.add.text(
+                            0,
+                            self.game.height - 40,
+                            'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
+                            {}
+                        );
+                    } else {
+                        if (self.player2HealthText) {
+                            self.player2HealthText.kill();
+                        }
+
+                        self.player2HealthText = self.add.text(
+                            self.game.width - 310,
+                            self.game.height - 40,
+                            'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
+                            {}
+                        );
+                    }
                 }
             });
 
@@ -177,27 +211,41 @@ namespace Game {
                 destinationY = this.player.y + (50 * Math.sin(angle.radians)) - 100;
 
                 graphics.moveTo(this.player.x - 100, this.player.y - 100);
-                graphics.lineTo(destinationX, destinationY);
 
-                graphics.moveTo(destinationX, destinationY);
-                graphics.lineTo(
-                    this.player.x + (10 * Math.cos(angle.radians + 45)) - 100,
-                    this.player.y + (10 * Math.sin(angle.radians + 45)) - 100
+                this.attackGraphics.push(
+                    graphics.lineTo(destinationX, destinationY)
                 );
 
                 graphics.moveTo(destinationX, destinationY);
-                graphics.lineTo(
-                    this.player.x + (10 * Math.cos(angle.radians - 45)) - 100,
-                    this.player.y + (10 * Math.sin(angle.radians - 45)) - 100
+
+                this.attackGraphics.push(
+                    graphics.lineTo(
+                        this.player.x + (10 * Math.cos(angle.radians + 45)) - 100,
+                        this.player.y + (10 * Math.sin(angle.radians + 45)) - 100
+                    )
+                );
+
+                graphics.moveTo(destinationX, destinationY);
+
+                this.attackGraphics.push(
+                    graphics.lineTo(
+                        this.player.x + (10 * Math.cos(angle.radians - 45)) - 100,
+                        this.player.y + (10 * Math.sin(angle.radians - 45)) - 100
+                    )
                 );
 
                 graphics.moveTo(this.player.x - 100, this.player.y - 100);
-                graphics.lineTo(
-                    this.player.x + (50 * Math.cos(angle.radians + Math.PI)) - 100,
-                    this.player.y + (50 * Math.sin(angle.radians + Math.PI)) - 100
+
+                this.attackGraphics.push(
+                    graphics.lineTo(
+                        this.player.x + (50 * Math.cos(angle.radians + Math.PI)) - 100,
+                        this.player.y + (50 * Math.sin(angle.radians + Math.PI)) - 100
+                    )
                 );
 
-                this.add.text(this.player.x - 10, this.player.y, this.banana.toString(), {});
+                this.attackGraphics.push(
+                    this.add.text(this.player.x - 10, this.player.y, this.banana.toString(), {})
+                );
             }
         }
 
@@ -221,8 +269,17 @@ namespace Game {
             var self = this,
                 wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
                 banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
+                attackGraphic,
                 w: number,
-                b: number;
+                b: number,
+                ag;
+
+            for (ag = 0; ag < self.attackGraphics.length; ag++) {
+                attackGraphic = self.attackGraphics[ag];
+                attackGraphic.kill();
+            }
+
+            self.attackGraphics = [];
 
             for (w = 0; w < waves.length; w++) {
                 wave = waves[w];

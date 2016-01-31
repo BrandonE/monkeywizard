@@ -5,15 +5,18 @@ namespace Generic {
     export class Banana extends Phaser.Sprite {
         state: Phaser.State;
         killed: boolean = false;
+        waveIndex: number;
+        bananaIndex: number;
 
         constructor(
             state: Phaser.State, waveIndex, bananaIndex: number, x: number, y: number, player_x: number, player_y
         ) {
+            super(state.game, x, y, 'sprites', 'Banana/Banana1');
+
             var point: Phaser.Point = new Phaser.Point(x, y),
                 playerPoint: Phaser.Point = new Phaser.Point(player_x, player_y),
                 angleDegrees: number = point.angle(playerPoint, true);
 
-            super(state.game, x, y, 'sprites', 'Banana/Banana1');
             this.state = state;
             this.waveIndex = waveIndex;
             this.bananaIndex = bananaIndex;
@@ -21,6 +24,14 @@ namespace Generic {
             this.game.physics.arcade.enable(this);
             this.body.allowRotation = true;
             this.body.velocity = this.game.physics.arcade.velocityFromAngle(angleDegrees, 500);
+        }
+
+        create() {
+            var self = this;
+
+            setTimeout(function() {
+                self.kill();
+            }, 5000 - (self.bananaIndex * 100));
         }
 
         update() {
