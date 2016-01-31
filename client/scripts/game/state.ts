@@ -23,6 +23,8 @@ namespace Game {
 
         create() {
             var self = this;
+            
+            this.sound.play('background-music', 100, true);
 
             this.config = this.cache.getJSON('config');
 
