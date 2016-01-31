@@ -24,7 +24,6 @@ namespace Generic {
             }, bananaIndex * 100);
 
             setTimeout(function() {
-                console.log('KILL ME');
                 self.kill();
             }, 5000);
         }
