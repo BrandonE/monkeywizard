@@ -295,7 +295,7 @@ namespace Game {
             }
 
             this.add.existing(
-                new Generic.Banana(this, x, y, banana.player_x, banana.player_y)
+                new Generic.Minion(this, 0, x, y, banana.player_x, banana.player_y)
             );
         }
     }
