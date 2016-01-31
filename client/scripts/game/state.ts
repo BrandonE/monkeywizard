@@ -11,6 +11,7 @@ namespace Game {
         pointer: Phaser.Pointer;
         waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]];
         attacking: boolean;
+        attackTimer: number;
         banana: number;
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
@@ -272,23 +273,14 @@ namespace Game {
         }
 
         attackStart() {
-            var self = this;
             self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
-            if (this.gameStatusText) {
-                this.gameStatusText.kill();
-            }
-
-            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Attack!', self.fontStyle);
             this.attacking = true;
             this.banana = 0;
             this.setBananaCounter();
 
-            this.timeout = setTimeout(function() {
-                self.attacking = false;
-                self.socket.emit('player attack', self.waves);
-                self.waves = [[]];
-            }, 10000);
+            this.attackTimer = 11;
+            this.attackTimeout(this);
         }
 
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
@@ -340,6 +332,28 @@ namespace Game {
             this.sound.pause();
 
             this.game.state.start('End');
+        }
+
+        attackTimeout(self) {
+            self.attackTimer--;
+
+            if (self.attackTimer >= 0) {
+                if (self.gameStatusText) {
+                    self.gameStatusText.kill();
+                }
+
+                this.gameStatusText = this.add.text(
+                    self.game.width - 690, self.game.height - 40, 'Attack! ' + self.attackTimer, self.fontStyle
+                );
+
+                self.timeout = setTimeout(function() {
+                    self.attackTimeout(self);
+                }, 1000);
+            } else {
+                self.attacking = false;
+                self.socket.emit('player attack', self.waves);
+                self.waves = [[]];
+            }
         }
 
         setBananaCounter() {
@@ -406,7 +420,7 @@ namespace Game {
             }
 
             if (angle.degreesCounterClockwise >= 315 || angle.degreesCounterClockwise < 45) {
-                x = 0;
+                x = 60;
                 y = (this.game.height - this.player.y) +
                     (((this.player.y * 2) * Math.sin(angle.radians)) / (2 * Math.cos(angle.radians)));
                 y = this.game.height - y;
