@@ -15,6 +15,7 @@ namespace Game {
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
         activeConnectionsText: Phaser.Text;
+        gameStatusText : Phaser.Text;
         player1HealthText: Phaser.Text;
         player2HealthText: Phaser.Text;
         attackGraphics = [];
@@ -252,7 +253,11 @@ namespace Game {
         attackStart() {
             var self = this;
 
-            console.log('Attack');
+            if (this.gameStatusText) {
+                this.gameStatusText.kill();
+            }
+
+            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Attack!');
             this.attacking = true;
             this.banana = 0;
 
@@ -264,7 +269,11 @@ namespace Game {
         }
 
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
-            console.log('Defend');
+            if (this.gameStatusText) {
+                this.gameStatusText.kill();
+            }
+
+            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Defend!');
 
             var self = this,
                 wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
