@@ -22,15 +22,24 @@ namespace Attack {
           mousePoint,
           angleDegrees,
           angleRadians,
+          angleDegreesCounterClockwise,
           destinationX,
           destinationY,
-          graphics;
+          graphics,
+          x,
+          y;
 
         if (banana < maxBanana) {
           playerPoint = new Phaser.Point(this.player.x, this.player.y);
           mousePoint = new Phaser.Point(this.pointer.x, this.pointer.y);
           angleDegrees = playerPoint.angle(mousePoint, true);
           angleRadians = playerPoint.angle(mousePoint);
+
+          if (angleDegrees >= 0) {
+              angleDegreesCounterClockwise = 360 - angleDegrees;
+          } else {
+              angleDegreesCounterClockwise = -angleDegrees;
+          }
 
           this.waves[0].push({
             angle: angleDegrees,
@@ -46,7 +55,6 @@ namespace Attack {
 
           destinationX = this.player.x + (50 * Math.cos(angleRadians)) - 100;
           destinationY = this.player.y + (50 * Math.sin(angleRadians)) - 100;
-
 
           graphics.moveTo(this.player.x - 100, this.player.y - 100);
           graphics.lineTo(destinationX, destinationY);
@@ -70,6 +78,43 @@ namespace Attack {
           );
 
           this.add.text(this.player.x - 10, this.player.y, banana);
+
+          if (angleDegreesCounterClockwise >= 45 && angleDegreesCounterClockwise < 135) {
+            x = self.player.x + (((self.player.x * 2) * Math.cos(angleRadians)) / (2 * Math.sin(angleRadians)));
+            y = 680;
+          }
+
+          if (angleDegreesCounterClockwise >= 135 && angleDegreesCounterClockwise < 225) {
+            x = 1240;
+            y = self.player.y + (((self.player.y * 2) * Math.sin(angleRadians)) / (2 * Math.cos(angleRadians)));
+          }
+
+          if (angleDegreesCounterClockwise >= 225 && angleDegreesCounterClockwise < 315) {
+            x = (1280 - self.player.x) + (((self.player.x * 2) * Math.cos(angleRadians)) / (2 * Math.sin(angleRadians)));
+            y = 0;
+            x = 1280 - x;
+          }
+
+          if (angleDegreesCounterClockwise >= 315 || angleDegreesCounterClockwise < 45) {
+            x = 0;
+            y = (720 - self.player.y) + (((self.player.y * 2) * Math.sin(angleRadians)) / (2 * Math.cos(angleRadians)));
+            y = 720 - y;
+          }
+
+          if (x > 1240) {
+            x = 1240;
+          }
+
+          if (y > 680) {
+            y = 680;
+          }
+
+          // Minion
+          this.add.text(
+              x,
+              y,
+            'M'
+          );
         }
       }, this);
 /*
