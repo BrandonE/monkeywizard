@@ -9,7 +9,7 @@ namespace Generic {
             state: Phaser.State, waveIndex, bananaIndex: number, x: number, y: number, player_x: number, player_y
         ) {
             super(state.game, x, y, 'sprites', 'Monkey_Minion/Front/Monkey_Minion_1Y');
-            this.scale.setTo(0.5);
+            this.scale.setTo(0.25);
             this.state = state;
             this.anchor.setTo(0.5);
             this.game.physics.arcade.enable(this);
@@ -20,14 +20,17 @@ namespace Generic {
                     new Generic.Banana(state, waveIndex, bananaIndex, x + 50, y + 20, player_x, player_y)
                 );
             }, bananaIndex * 100);
-        }
 
-        create() {
             var self = this;
 
             setTimeout(function() {
                 self.kill();
-            }, 5000);
+            }, 3000);
         }
+
+        create() {
+
+        }
+
     }
 }

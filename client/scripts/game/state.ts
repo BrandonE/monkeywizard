@@ -31,7 +31,7 @@ namespace Game {
             palm1.anchor.setTo(0.5);
             var palm2 = this.add.image(this.game.width -100 , this.game.height - 100, 'sprites', 'Tree/palmTopView2');
             palm2.anchor.setTo(0.5);
-            var palm3 = this.add.image(this.game.width -100 , 100 'sprites', 'Tree/palmTopView2');
+            var palm3 = this.add.image(this.game.width -100 , 100, 'sprites', 'Tree/palmTopView2');
             palm3.anchor.setTo(0.5);
             var palm4 = this.add.image(100 ,this.game.height - 100, 'sprites', 'Tree/palmTopView2');
             palm4.anchor.setTo(0.5);
