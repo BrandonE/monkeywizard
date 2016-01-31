@@ -57,8 +57,19 @@ gulp.task('css-production', function() {
 
 // Migrate phaser files
 gulp.task('phaser', function () {
-  return gulp.src(Config.source + 'vendor/phaser/build/phaser.*')
+  gulp.src(Config.source + '../bower_components/phaser/build/phaser.min.js')
     .pipe(gulp.dest(Config.build + 'scripts/'));
+
+  gulp.src(Config.source + '../bower_components/phaser/build/phaser.map')
+    .pipe(gulp.dest(Config.build + 'scripts/'));
+});
+
+// Migrate socket.io-client files
+gulp.task('socket.io-client', function () {
+    return gulp.src(Config.source + '../bower_components/socket.io-client/socket.io.js')
+      .pipe(concat('socket.io.min.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest(Config.build + 'scripts/'));
 });
 
 // Assets
@@ -71,5 +82,5 @@ gulp.task('assets', function () {
 gulp.task('watch', function() {
   return gulp.watch(Config.source + '**/*.ts', ['ts-crunch']);
 });
-gulp.task('default', ['watch', 'ts-crunch', 'html-crunch', 'css-crunch', 'phaser', 'assets']);
+gulp.task('default', ['watch', 'ts-crunch', 'html-crunch', 'css-crunch', 'phaser', 'socket.io-client', 'assets']);
 
