@@ -22,7 +22,9 @@ namespace Generic {
       this.pointer = this.game.input.activePointer;
       this.anchor.setTo(0.5);
       this.game.physics.arcade.enable(this);
+      this.checkWorldBounds = true;
       this.body.allowRotation = false;
+      this.body.collideWorldBounds = true;
     }
 
     update(): void {
@@ -40,15 +42,15 @@ namespace Generic {
       }
       
       // WASD
-      if (this.wasd.left.isDown && this.x > 0) {
+      if (this.wasd.left.isDown) {
         this.x -= this.keySpeed;
-      } else if (this.wasd.right.isDown && this.x < this.game.width) {
+      } else if (this.wasd.right.isDown) {
         this.x += this.keySpeed;
       }
       
-      if (this.wasd.up.isDown && this.y > 0) {
+      if (this.wasd.up.isDown) {
         this.y -= this.keySpeed;
-      } else if (this.wasd.down.isDown && this.y < this.game.height) {
+      } else if (this.wasd.down.isDown) {
         this.y += this.keySpeed;
       }
     }
