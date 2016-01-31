@@ -23,7 +23,8 @@ namespace Game {
 
         create() {
             var self = this;
-            
+            self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
+
             this.sound.play('background-music', 100, true);
 
             var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
@@ -71,10 +72,10 @@ namespace Game {
                     self.players = gameSent.players;
                     self.clientPlayerNum = playerNum;
 
-                    self.add.text(0, 0, 'Game ID: ' + self.id, {});
+                    self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
 
                     if (playerNum) {
-                        self.add.text(0, 25, 'Player #' + playerNum, {});
+                        self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
                     }
                 }
 
@@ -103,7 +104,7 @@ namespace Game {
                     0,
                     self.game.height - 40,
                     text,
-                    {}
+                    self.fontStyle
                 );
 
                 if (self.players[1]) {
@@ -120,7 +121,7 @@ namespace Game {
                     self.game.width - 310,
                     self.game.height - 40,
                     text,
-                    {}
+                    self.fontStyle
                 );
 
                 if (self.players[0] && self.players[1]) {
@@ -150,7 +151,7 @@ namespace Game {
                 }
 
                 self.activeConnectionsText = self.add.text(
-                    0, 50, 'Active Connections: ' + activeConnections.toString(), {}
+                    0, 50, 'Active Connections: ' + activeConnections.toString(), self.fontStyle
                 );
             });
 
@@ -180,7 +181,7 @@ namespace Game {
                             0,
                             self.game.height - 40,
                             'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
-                            {}
+                            self.fontStyle
                         );
                     } else {
                         if (self.player2HealthText) {
@@ -191,7 +192,7 @@ namespace Game {
                             self.game.width - 310,
                             self.game.height - 40,
                             'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
-                            {}
+                            self.fontStyle
                         );
                     }
                 }
@@ -271,12 +272,14 @@ namespace Game {
 
         attackStart() {
             var self = this;
+            self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
+
 
             if (this.gameStatusText) {
                 this.gameStatusText.kill();
             }
 
-            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Attack!');
+            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Attack!', self.fontStyle);
             this.attacking = true;
             this.banana = 0;
 
@@ -292,7 +295,7 @@ namespace Game {
                 this.gameStatusText.kill();
             }
 
-            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Defend!');
+            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Defend!', { font: "25px Arial", fill: "#ffff00", align: "center" });
 
             var self = this,
                 wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],

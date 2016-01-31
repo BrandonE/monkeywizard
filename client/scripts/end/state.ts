@@ -11,7 +11,7 @@ namespace End {
             background.height = this.game.height;
             background.width = this.game.width;
 
-            var text = this.add.text(this.world.centerX, this.world.centerY - 100, this.message, {});
+            var text = this.add.text(this.world.centerX, this.world.centerY - 100, this.message, { font: "60px Arial", fill: "#ffff00", align: "center" });
 
             var backButton = this.add.text(this.world.centerX, this.world.centerY + 100, "Back to Menu", { font: "65px Arial", fill: "#ffff00", align: "center" });
 
