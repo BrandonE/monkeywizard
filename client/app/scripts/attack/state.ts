@@ -81,32 +81,34 @@ namespace Attack {
 
           if (angleDegreesCounterClockwise >= 45 && angleDegreesCounterClockwise < 135) {
             x = self.player.x + (((self.player.x * 2) * Math.cos(angleRadians)) / (2 * Math.sin(angleRadians)));
-            y = 680;
+            y = this.game.height - 40;
           }
 
           if (angleDegreesCounterClockwise >= 135 && angleDegreesCounterClockwise < 225) {
-            x = 1240;
+            x = this.game.width - 40;
             y = self.player.y + (((self.player.y * 2) * Math.sin(angleRadians)) / (2 * Math.cos(angleRadians)));
           }
 
           if (angleDegreesCounterClockwise >= 225 && angleDegreesCounterClockwise < 315) {
-            x = (1280 - self.player.x) + (((self.player.x * 2) * Math.cos(angleRadians)) / (2 * Math.sin(angleRadians)));
+            x = (this.game.width - self.player.x) +
+              (((self.player.x * 2) * Math.cos(angleRadians)) / (2 * Math.sin(angleRadians)));
             y = 0;
-            x = 1280 - x;
+            x = this.game.width - x;
           }
 
           if (angleDegreesCounterClockwise >= 315 || angleDegreesCounterClockwise < 45) {
             x = 0;
-            y = (720 - self.player.y) + (((self.player.y * 2) * Math.sin(angleRadians)) / (2 * Math.cos(angleRadians)));
-            y = 720 - y;
+            y = (this.game.height - self.player.y) +
+              (((self.player.y * 2) * Math.sin(angleRadians)) / (2 * Math.cos(angleRadians)));
+            y = this.game.height - y;
           }
 
-          if (x > 1240) {
-            x = 1240;
+          if (x > this.game.width - 40) {
+            x = this.game.width - 40;
           }
 
-          if (y > 680) {
-            y = 680;
+          if (y > this.game.height - 40) {
+            y = this.game.height - 40;
           }
 
           // Minion
