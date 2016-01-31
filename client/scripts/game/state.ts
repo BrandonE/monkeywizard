@@ -14,6 +14,7 @@ namespace Game {
         banana: number;
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
+        music: Phaser.Sound;
         activeConnectionsText: Phaser.Text;
         gameStatusText : Phaser.Text;
         player1HealthText: Phaser.Text;
@@ -25,7 +26,7 @@ namespace Game {
             var self = this;
             self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
-            this.sound.play('background-music', 100, true);
+            this.sound = this.sound.play('background-music', 100, true);
 
             var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
             background.height = this.game.height;
@@ -332,6 +333,8 @@ namespace Game {
             if (this.timeout) {
                 clearTimeout(this.timeout);
             }
+
+            this.sound.pause();
 
             this.game.state.start('End');
         }
