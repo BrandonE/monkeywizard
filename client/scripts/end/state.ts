@@ -8,7 +8,8 @@ namespace End {
         turns;
 
         create() {
-            var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            var self = this,
+                background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
 
             this.fanfare = this.sound.play('fanfare', 100);
 
@@ -28,8 +29,8 @@ namespace End {
             backButton.events.onInputDown.add(goBack, this);
 
             function goBack() {
-                this.fanfare.kill();
-                this.game.state.start('Menu');;
+                self.fanfare.pause();
+                self.game.state.start('Menu');;
             }
         }
     }
