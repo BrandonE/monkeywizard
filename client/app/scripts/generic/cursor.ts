@@ -28,6 +28,7 @@ namespace Generic {
     update(): void {
       
       // Touch
+      /*
       var distance = Phaser.Point.distance(this, this.pointer);
       if (this.pointer.isDown && distance > 45) {
         this.destination = new Phaser.Point(this.pointer.x, this.pointer.y);
@@ -39,6 +40,7 @@ namespace Generic {
         this.idle();
       }
       
+      */
       // WASD
       if (this.wasd.left.isDown && this.x > 0) {
         this.x -= this.keySpeed;
