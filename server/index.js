@@ -15,10 +15,6 @@ if (process.env.PORT) {
 
 app.use(express.static(__dirname + '/../client/build'));
 
-app.get('/', function(req, res) {
-    res.sendFile('index.html', {root : __dirname + '/../client/build'});
-});
-
 socket.attach(io);
 
 server = http.listen(config.port, function() {
