@@ -9,7 +9,7 @@ namespace Menu {
 
         update() {
             if (this.input.activePointer.isDown) {
-                this.game.state.start('Attack');
+                this.game.state.start('Game');
             }
         }
     }

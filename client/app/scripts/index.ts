@@ -7,10 +7,8 @@ class MonkeyWizards extends Phaser.Game {
         this.state.add('Boot', Boot.State);
         this.state.add('Loader', Loader.State);
         this.state.add('Menu', Menu.State);
-        this.state.add('Attack', Attack.State);
-        this.state.add('Defend', Defend.State);
-        this.state.add('Score', Score.State);
-
+        this.state.add('Game', Game.State);
+        this.state.add('End', End.State);
         this.state.start('Boot');
     }
 }

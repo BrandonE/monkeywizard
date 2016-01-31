@@ -1,7 +1,7 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 'use strict';
 
-namespace Attack {
+namespace Game {
     export class State extends Phaser.State {
         player: Player;
         pointer: Phaser.Pointer;
