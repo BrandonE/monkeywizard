@@ -6,7 +6,7 @@ namespace Defend {
     player: Player;
     
     create() {
-      console.log('Game Started');
+      console.log('Defend');
       this.player = this.add.existing(new Player(this));
     }
   }
