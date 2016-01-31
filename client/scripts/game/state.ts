@@ -211,6 +211,7 @@ namespace Game {
             setTimeout(function() {
                 self.attacking = false;
                 self.socket.emit('player attack', self.waves);
+                self.waves = [[]];
             }, 10000);
         }
 
