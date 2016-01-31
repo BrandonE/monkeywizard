@@ -226,7 +226,7 @@ namespace Game {
 
                 for (b = 0; b < wave.length; b++) {
                     banana = wave[b];
-                    this.addMinion(banana, b);
+                    this.addMinion(banana, w, b);
                 }
             }
         }
@@ -252,7 +252,9 @@ namespace Game {
         }
 
         addMinion(
-            banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }, index: number
+            banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
+            waveIndex: number,
+            bananaIndex: number
         ) {
             var angle: { degrees: number, degreesCounterClockwise: number, radians: number },
                 x: number,
@@ -295,7 +297,7 @@ namespace Game {
             }
 
             this.add.existing(
-                new Generic.Minion(this, index, x, y, banana.player_x, banana.player_y)
+                new Generic.Minion(this, waveIndex, bananaIndex, x, y, banana.player_x, banana.player_y)
             );
         }
     }
