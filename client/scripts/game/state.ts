@@ -24,6 +24,20 @@ namespace Game {
         create() {
             var self = this;
 
+            var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            background.height = this.game.height;
+            background.width = this.game.width;
+
+            var palm1 = this.add.image(100 ,100, 'sprites', 'Tree/palmTopView2');
+            palm1.anchor.setTo(0.5);
+            var palm2 = this.add.image(this.game.width -100 , this.game.height - 100, 'sprites', 'Tree/palmTopView2');
+            palm2.anchor.setTo(0.5);
+            var palm3 = this.add.image(this.game.width -100 , 100, 'sprites', 'Tree/palmTopView2');
+            palm3.anchor.setTo(0.5);
+            var palm4 = this.add.image(100 ,this.game.height - 100, 'sprites', 'Tree/palmTopView2');
+            palm4.anchor.setTo(0.5);
+
+
             this.config = this.cache.getJSON('config');
 
             this.player = this.add.existing(new Player(this));

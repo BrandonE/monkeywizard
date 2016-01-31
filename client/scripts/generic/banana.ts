@@ -32,6 +32,9 @@ namespace Generic {
         }
 
         update() {
+
+            this.angle += 5;
+
             if (!this.killed && this.checkOverlap(this, this.state.player)) {
                 this.killed = true;
 
