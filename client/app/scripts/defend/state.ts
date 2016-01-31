@@ -1,39 +1,43 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 'use strict';
 
-namespace Defend { 
+namespace Defend {
   export class State extends Phaser.State {
     player: Player;
-    bananas: number;
-    
+    bananas: Bananas;
+    bananaCount: number;
+    waveLength: number;
+    nextWave: number;
+
     create(): void {
       console.log('Game Started');
+      this.world.bounds = new Phaser.Rectangle(125, 125, 1030, 470);
       this.player = this.add.existing(new Player(this));
-      this.bananas = 30;
+      this.bananaCount = 30;
+      this.waveLength = 12 * 60; // waves are 12 seconds long
+      this.nextWave = this.game.time.time + 120; // start first wave after two seconds
+      this.bananas = new Bananas(this);
+    }
+
+    update(): void {
+      if (this.game.time.time > this.nextWave) {
+        this.bananas.vectors = this.generateVectors();
+      }
     }
     
-    generateBananas(): IVector[] {
+    generateVectors(): IVector[] {
       var vectors = [],
           xMaxima = this.game.width,
           yMaxima = this.game.height,
-          angleMaxima = Math.PI * 2;
-      for (var i = 0; i < this.bananas; i++) {
-        var vector: IVector = {
+          angleMaxima = 360;
+      for (var i = 0; i < this.bananaCount; i++) {
+        vectors.push({
           x: Math.random() * xMaxima,
           y: Math.random() * yMaxima,
-          angle: Math.random() * angleMaxima
-        };
+          angle: Math.random() * angleMaxima - 180
+        });
       }
       return vectors;
     }
-  }
-  
-  export interface IVector {
-    x: number;
-    y: number;
-    angle: number;
-  }
-  
-  export class Player extends Generic.Cursor {
   }
 }
