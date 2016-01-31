@@ -19,8 +19,6 @@ namespace Game {
             var self = this;
 
             this.config = this.cache.getJSON('config');
-            this.attacking = true;
-            console.log('Attack');
 
             this.player = this.add.existing(new Player(this));
             this.pointer = this.game.input.activePointer;
@@ -36,7 +34,8 @@ namespace Game {
             this.socket.on('user connected', function(playerNum, gameSent) {
                 var player,
                     playerIndex,
-                    healthList = '';
+                    healthList = '',
+                    text;
 
                 if (self.id) {
                     if (playerNum) {
@@ -69,21 +68,33 @@ namespace Game {
                 }
 
                 if (self.players[0]) {
-                    self.add.text(
-                        0,
-                        self.game.height - 40,
-                        'Player 1 Health: ' + self.players[0].health + ' / ' + self.config.maxHealth,
-                        {}
-                    );
+                    text = 'Player 1 Health: ' + self.players[0].health + ' / ' + self.config.maxHealth;
+                } else {
+                    text = 'Waiting for Player 1...';
                 }
 
+                self.add.text(
+                    0,
+                    self.game.height - 40,
+                    text,
+                    {}
+                );
+
                 if (self.players[1]) {
-                    self.add.text(
-                        self.game.width - 300,
-                        self.game.height - 40,
-                        'Player 2 Health: ' + self.players[1].health + ' / ' + self.config.maxHealth,
-                        {}
-                    );
+                    text = 'Player 2 Health: ' + self.players[1].health + ' / ' + self.config.maxHealth;
+                } else {
+                    text = 'Waiting for Player 2...';
+                }
+
+                self.add.text(
+                    self.game.width - 300,
+                    self.game.height - 40,
+                    text,
+                    {}
+                );
+
+                if (self.players[0] && self.players[1]) {
+                    self.attackStart();
                 }
             });
 
@@ -138,11 +149,6 @@ namespace Game {
                 self.game.state.states.End.turns = turns;
                 self.game.state.start('End');
             });
-
-            setTimeout(function() {
-                self.attackTimeout(self);
-            }, 10000);
-
         }
 
         attack() {
@@ -195,9 +201,16 @@ namespace Game {
             }
         }
 
-        attackTimeout(self) {
-            self.attacking = false;
-            self.socket.emit('player attack', self.waves);
+        attackStart() {
+            var self = this;
+
+            console.log('Attack');
+            this.attacking = true;
+
+            setTimeout(function() {
+                self.attacking = false;
+                self.socket.emit('player attack', self.waves);
+            }, 10000);
         }
 
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
