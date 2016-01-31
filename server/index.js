@@ -13,13 +13,7 @@ if (process.env.PORT) {
     config.port = process.env.PORT;
 }
 
-app.set('views', __dirname, '../views');
-
-app.use(express.static(__dirname + '/../public'));
-
-app.get('/', function(req, res) {
-    res.sendFile('index.html', {root : __dirname + '/../views'});
-});
+app.use(express.static(__dirname + '/../client/build'));
 
 socket.attach(io);
 

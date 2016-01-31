@@ -9,6 +9,8 @@ namespace Game {
         attacking: boolean = true;
         banana: number = 0;
         maxBanana: number = 30;
+        io: SocketIOClientStatic;
+        socket: SocketIOClient.Socket = io.connect();
 
         create() {
             var self = this;
