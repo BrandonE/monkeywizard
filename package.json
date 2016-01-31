@@ -4,7 +4,7 @@
   "description": "Monkey Wizard: Simian Sorcery - Online Bullet Curtain Battle Game https://github.com/BrandonE/monkeywizard",
   "main": "server/index.js",
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install; node ./node_modules/gulp/bin/gulp.js",
+    "postinstall": "./node_modules/bower/bin/bower install; node ./node_modules/gulp/bin/gulp.js build",
     "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

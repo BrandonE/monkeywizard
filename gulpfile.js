@@ -82,4 +82,6 @@ gulp.task('assets', function () {
 gulp.task('watch', function() {
     return gulp.watch(Config.source + '**/*.ts', ['ts-crunch']);
 });
+
 gulp.task('default', ['watch', 'ts-crunch', 'html-crunch', 'css-crunch', 'phaser', 'socket.io-client', 'assets']);
+gulp.task('build', ['ts-crunch', 'html-crunch', 'css-crunch', 'phaser', 'socket.io-client', 'assets']);
