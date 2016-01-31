@@ -18,9 +18,9 @@ namespace Menu {
             this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'Monkey Wizards\n - Simian Sorcery -\n\nClick to Start!', { font: "35px Arial", fill: "#ffffff", align: "center" });
             this.text.anchor.setTo(0.5);
 
-            this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard');
+            this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
             this.monkeyFace.anchor.setTo(0.5);
-            this.monkeyFace.scale.setTo(2);
+            this.monkeyFace.scale.setTo(1);
 
             this.banana1L = this.game.add.sprite(this.game.world.centerX -200, this.game.world.centerY - 200, 'sprites', 'Banana/Banana1');
             this.banana1L.anchor.setTo(0.5);

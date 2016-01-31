@@ -23,6 +23,10 @@ namespace Game {
         create() {
             var self = this;
 
+            var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            background.height = this.game.height;
+            background.width = this.game.width;
+
             this.config = this.cache.getJSON('config');
 
             this.player = this.add.existing(new Player(this));

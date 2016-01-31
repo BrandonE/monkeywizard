@@ -8,8 +8,8 @@ namespace Generic {
         constructor(
             state: Phaser.State, waveIndex, bananaIndex: number, x: number, y: number, player_x: number, player_y
         ) {
-            super(state.game, x, y, 'sprites', 'Monkey_Minion/Monkey_Minion_fwd');
-
+            super(state.game, x, y, 'sprites', 'Monkey_Minion/Front/Monkey_Minion_1Y');
+            this.scale.setTo(0.5);
             this.state = state;
             this.anchor.setTo(0.5);
             this.game.physics.arcade.enable(this);

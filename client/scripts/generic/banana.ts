@@ -17,6 +17,7 @@ namespace Generic {
                 playerPoint: Phaser.Point = new Phaser.Point(player_x, player_y),
                 angleDegrees: number = point.angle(playerPoint, true);
 
+            this.scale.setTo(0.5);
             this.state = state;
             this.waveIndex = waveIndex;
             this.bananaIndex = bananaIndex;
@@ -35,6 +36,9 @@ namespace Generic {
         }
 
         update() {
+
+            this.angle += 5;
+
             if (!this.killed && this.checkOverlap(this, this.state.player)) {
                 this.killed = true;
 
