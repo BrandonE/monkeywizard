@@ -10,7 +10,7 @@ namespace End {
         create() {
             var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
 
-            this.sound = this.sound.play('fanfare', 100);
+            this.fanfare = this.sound.play('fanfare', 100);
 
             background.height = this.game.height;
             background.width = this.game.width;
