@@ -11,7 +11,7 @@ namespace Game {
         pointer: Phaser.Pointer;
         waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]];
         attacking: boolean;
-        banana: number = 0;
+        banana: number;
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
 
@@ -206,6 +206,7 @@ namespace Game {
 
             console.log('Attack');
             this.attacking = true;
+            this.banana = 0;
 
             setTimeout(function() {
                 self.attacking = false;
@@ -216,7 +217,8 @@ namespace Game {
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
             console.log('Defend');
 
-            var wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
+            var self = this,
+                wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
                 banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
                 w: number,
                 b: number;
@@ -229,6 +231,10 @@ namespace Game {
                     this.addMinion(banana, w, b);
                 }
             }
+
+            setTimeout(function() {
+                self.attackStart();
+            }, 5000);
         }
 
         getAngle(x1: number, y1: number, x2: number, y2: number) {
