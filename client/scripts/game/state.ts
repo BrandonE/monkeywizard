@@ -346,7 +346,7 @@ namespace Game {
             if (this.bananaCounter) {
                 this.bananaCounter.kill();
             }
-            
+
             this.bananaCounter = this.add.text(
                 this.game.width - 290,
                 0,

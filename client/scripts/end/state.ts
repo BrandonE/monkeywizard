@@ -4,10 +4,14 @@
 namespace End {
     export class State extends Phaser.State {
         message: string;
+        fanfare: Phaser.Sound;
         turns;
 
         create() {
-        		var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+
+            this.sound = this.sound.play('fanfare', 100);
+
             background.height = this.game.height;
             background.width = this.game.width;
 
@@ -24,9 +28,9 @@ namespace End {
             backButton.events.onInputDown.add(goBack, this);
 
             function goBack() {
+                this.fanfare.kill();
                 this.game.state.start('Menu');;
             }
-
         }
     }
 }
