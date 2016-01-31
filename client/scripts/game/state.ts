@@ -15,6 +15,8 @@ namespace Game {
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
         music: Phaser.Sound;
+        gameIdText: Phaser.Text;
+        playerNumText: Phaser.Text;
         activeConnectionsText: Phaser.Text;
         gameStatusText : Phaser.Text;
         player1HealthText: Phaser.Text;
@@ -58,7 +60,6 @@ namespace Game {
             this.socket.on('user connected', function(playerNum, gameSent) {
                 var player,
                     playerIndex,
-                    healthList = '',
                     text;
 
                 if (self.id) {
@@ -72,23 +73,20 @@ namespace Game {
                     self.id = gameSent.id;
                     self.players = gameSent.players;
                     self.clientPlayerNum = playerNum;
-
-                    self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
-
-                    if (playerNum) {
-                        self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
-                    }
                 }
 
-                for (playerIndex = 0; playerIndex < self.players.length; playerIndex++) {
-                    player = self.players[playerIndex];
-                    playerNum = (playerIndex + 1);
+                if (self.gameIdText) {
+                    self.gameIdText.kill();
+                }
 
-                    if (player) {
-                        healthList += '<li>Player #' + playerNum + ': ' +
-                            '<span id="health' + playerNum + '">'+ player.health + '</span>' +
-                            ' / ' + self.config.maxHealth + '</li>';
+                self.gameIdText = self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
+
+                if (playerNum) {
+                    if (self.playerNumText) {
+                        self.playerNumText.kill();
                     }
+                    
+                    self.playerNumText = self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
                 }
 
                 if (self.players[0]) {
@@ -328,6 +326,9 @@ namespace Game {
         }
 
         end() {
+            this.gameIdText.kill();
+            this.playerNumText.kill();
+
             this.socket.close();
 
             if (this.timeout) {
