@@ -13,7 +13,8 @@ namespace Generic {
         ) {
             super(state.game, x, y, 'sprites', 'Banana/Banana1');
 
-            var point: Phaser.Point = new Phaser.Point(x, y),
+            var self = this,
+                point: Phaser.Point = new Phaser.Point(x, y),
                 playerPoint: Phaser.Point = new Phaser.Point(player_x, player_y),
                 angleDegrees: number = point.angle(playerPoint, true);
 
@@ -24,10 +25,6 @@ namespace Generic {
             this.game.physics.arcade.enable(this);
             this.body.allowRotation = true;
             this.body.velocity = this.game.physics.arcade.velocityFromAngle(angleDegrees, 500);
-        }
-
-        create() {
-            var self = this;
 
             setTimeout(function() {
                 self.kill();

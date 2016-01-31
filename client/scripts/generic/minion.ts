@@ -10,6 +10,8 @@ namespace Generic {
         ) {
             super(state.game, x, y, 'sprites', 'Monkey_Minion/Monkey_Minion_fwd');
 
+            var self = this;
+
             this.state = state;
             this.anchor.setTo(0.5);
             this.game.physics.arcade.enable(this);
@@ -20,12 +22,9 @@ namespace Generic {
                     new Generic.Banana(state, waveIndex, bananaIndex, x + 50, y + 20, player_x, player_y)
                 );
             }, bananaIndex * 100);
-        }
-
-        create() {
-            var self = this;
 
             setTimeout(function() {
+                console.log('KILL ME');
                 self.kill();
             }, 5000);
         }
