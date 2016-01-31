@@ -17,6 +17,7 @@ namespace Defend {
       this.waveLength = 12 * 60; // waves are 12 seconds long
       this.nextWave = this.game.time.time + 120; // start first wave after two seconds
       this.bananas = new Bananas(this);
+      this.sound.add('background-music', 100, true);
     }
 
     update(): void {
