@@ -1,0 +1,20 @@
+{
+  "name": "Monkey Wizard: Simian Sorcery",
+  "version": "0.0.0",
+  "authors": [
+    "Sean Spradlin <seanspradlin@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.4.3",
+    "socket.io-client": "~1.4.5"
+  }
+}

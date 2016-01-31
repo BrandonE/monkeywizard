@@ -8,4 +8,7 @@
 .idea/workspace.xml
 .idea/dictionaries/brandonevans.xml
 .idea/scopes/scope_settings.xml
-node_modules
+*/node_modules/
+app/vendor/
+bower_components/
+build/
