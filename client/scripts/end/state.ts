@@ -11,7 +11,22 @@ namespace End {
             background.height = this.game.height;
             background.width = this.game.width;
 
-            this.add.text(500, 360, this.message, {});
+            var text = this.add.text(this.world.centerX, this.world.centerY - 100, this.message, {});
+
+            var backButton = this.add.text(this.world.centerX, this.world.centerY + 100, "Back to Menu", { font: "65px Arial", fill: "#ffff00", align: "center" });
+
+            // text.tint = 0xff00033;
+
+            text.anchor.set(0.5);
+            backButton.anchor.set(0.5);
+
+            backButton.inputEnabled = true;
+            backButton.events.onInputDown.add(goBack, this);
+
+            function goBack() {
+                this.game.state.start('Menu');;
+            }
+
         }
     }
 }
