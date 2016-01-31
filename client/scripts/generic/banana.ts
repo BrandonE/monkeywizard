@@ -17,5 +17,18 @@ namespace Generic {
             this.body.allowRotation = true;
             this.body.velocity = this.game.physics.arcade.velocityFromAngle(angleDegrees, 500);
         }
+
+        update() {
+            if (this.checkOverlap(this, this.state.player)) {
+                delete this.kill();
+            }
+        }
+
+        checkOverlap(spriteA, spriteB) {
+            var boundsA = spriteA.getBounds();
+            var boundsB = spriteB.getBounds();
+
+            return Phaser.Rectangle.intersects(boundsA, boundsB);
+        }
     }
 }
