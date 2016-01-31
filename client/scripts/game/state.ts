@@ -116,6 +116,7 @@ namespace Game {
 
                 if (playerNum) {
                     if (self.players[0] && self.players[1]) {
+                        self.socket.close();
                         self.game.state.states.End.message = 'Player #' + playerNum + ' has forfeited!';
                         self.game.state.states.End.turns = null;
                         self.game.state.start('End');
@@ -180,6 +181,7 @@ namespace Game {
             });
 
             this.socket.on('end', function(losingPlayerNum, turns) {
+                self.socket.close();
                 self.game.state.states.End.message = 'Player #' + losingPlayerNum + ' has been defeated!';
                 self.game.state.states.End.turns = turns;
                 self.game.state.start('End');
