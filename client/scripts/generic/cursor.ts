@@ -28,15 +28,15 @@ namespace Generic {
         }
 
         update(): void {
-            if (this.wasd.left.isDown && this.x > 300) {
+            if (this.wasd.left.isDown && this.x > 280) {
                 this.x -= this.keySpeed;
-            } else if (this.wasd.right.isDown && this.x < this.game.width - 300) {
+            } else if (this.wasd.right.isDown && this.x < this.game.width - 280) {
                 this.x += this.keySpeed;
             }
 
             if (this.wasd.up.isDown && this.y > 125) {
                 this.y -= this.keySpeed;
-            } else if (this.wasd.down.isDown && this.y < this.game.height - 125) {
+            } else if (this.wasd.down.isDown && this.y < this.game.height - 185) {
                 this.y += this.keySpeed;
             }
         }
