@@ -2,15 +2,15 @@
 'use strict';
 
 namespace Menu {
-  export class State extends Phaser.State {
-    create() {
-      console.log('Menu Loaded');
-    }
+    export class State extends Phaser.State {
+        create() {
+            console.log('Menu Loaded');
+        }
 
-    update() {
-      if (this.input.activePointer.isDown) {
-        this.game.state.start('Attack');
-      }
+        update() {
+            if (this.input.activePointer.isDown) {
+                this.game.state.start('Attack');
+            }
+        }
     }
-  }
 }
