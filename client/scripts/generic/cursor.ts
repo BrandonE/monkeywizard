@@ -14,7 +14,8 @@ namespace Generic {
         constructor(state: Phaser.State) {
             var x = state.stage.width / 2,
                 y = state.stage.height / 2;
-            super(state.game, x, y, 'sprites', 'Monkey_Wizard/Monkey_Wizard');
+
+            super(state.game, x, y, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
             this.state = state;
             this.wasd = new Generic.WASD(state.game);
             this.speed = 850;
