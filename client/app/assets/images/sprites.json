@@ -1,60 +1,204 @@
 {"frames": {
 
+"Aztec Temple/Aztec-Temple":
+{
+	"frame": {"x":1,"y":1,"w":512,"h":512},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":512,"h":512},
+	"sourceSize": {"w":512,"h":512}
+},
 "Banana/Banana1":
 {
-	"frame": {"x":261,"y":1,"w":60,"h":61},
+	"frame": {"x":435,"y":876,"w":117,"h":118},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":1,"y":1,"w":60,"h":61},
-	"sourceSize": {"w":64,"h":64}
+	"spriteSourceSize": {"x":4,"y":4,"w":117,"h":118},
+	"sourceSize": {"w":128,"h":128}
 },
 "Banana/Banana2":
 {
-	"frame": {"x":261,"y":64,"w":60,"h":61},
+	"frame": {"x":554,"y":876,"w":117,"h":118},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":1,"y":1,"w":60,"h":61},
-	"sourceSize": {"w":64,"h":64}
+	"spriteSourceSize": {"x":4,"y":4,"w":117,"h":118},
+	"sourceSize": {"w":128,"h":128}
 },
 "Banana/Banana3":
 {
-	"frame": {"x":323,"y":1,"w":60,"h":61},
+	"frame": {"x":673,"y":876,"w":117,"h":118},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":1,"y":1,"w":60,"h":61},
-	"sourceSize": {"w":64,"h":64}
-},
-"Monkey_Minion/Monkey_Minion_fwd":
-{
-	"frame": {"x":1,"y":1,"w":128,"h":121},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":2,"w":128,"h":121},
+	"spriteSourceSize": {"x":4,"y":4,"w":117,"h":118},
 	"sourceSize": {"w":128,"h":128}
 },
-"Monkey_Wizard/Monkey_Wizard":
+"Banana/Banana4":
 {
-	"frame": {"x":131,"y":1,"w":128,"h":114},
+	"frame": {"x":773,"y":407,"w":117,"h":118},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":0,"y":7,"w":128,"h":114},
+	"spriteSourceSize": {"x":4,"y":4,"w":117,"h":118},
 	"sourceSize": {"w":128,"h":128}
+},
+"Banana_Icon/Banana_Icon":
+{
+	"frame": {"x":435,"y":515,"w":4,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":4},
+	"sourceSize": {"w":4,"h":4}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_1B":
+{
+	"frame": {"x":692,"y":635,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_1R":
+{
+	"frame": {"x":949,"y":470,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_1Y":
+{
+	"frame": {"x":1206,"y":470,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_2B":
+{
+	"frame": {"x":1463,"y":483,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_2R":
+{
+	"frame": {"x":949,"y":698,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_2Y":
+{
+	"frame": {"x":1206,"y":698,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Back/Monkey_Minion_back_3":
+{
+	"frame": {"x":1463,"y":711,"w":255,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":6,"w":255,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Front/Monkey_Minion_1B":
+{
+	"frame": {"x":949,"y":1,"w":255,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":5,"w":255,"h":239},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Front/Monkey_Minion_1R":
+{
+	"frame": {"x":1206,"y":1,"w":255,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":5,"w":255,"h":239},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Front/Monkey_Minion_1Y":
+{
+	"frame": {"x":1463,"y":1,"w":255,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":5,"w":255,"h":239},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Front/Monkey_Minion_2B":
+{
+	"frame": {"x":1,"y":515,"w":432,"h":404},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":10,"w":432,"h":404},
+	"sourceSize": {"w":436,"h":436}
+},
+"Monkey_Minion/Front/Monkey_Minion_2R":
+{
+	"frame": {"x":515,"y":1,"w":432,"h":404},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":10,"w":432,"h":404},
+	"sourceSize": {"w":436,"h":436}
+},
+"Monkey_Minion/Front/Monkey_Minion_2Y":
+{
+	"frame": {"x":1465,"y":242,"w":255,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":5,"w":255,"h":239},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Minion/Front/Monkey_Minion_3":
+{
+	"frame": {"x":435,"y":635,"w":255,"h":239},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":5,"w":255,"h":239},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Wizard/Monkey_Wizard_1":
+{
+	"frame": {"x":949,"y":242,"w":256,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":16,"w":256,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Wizard/Monkey_Wizard_2":
+{
+	"frame": {"x":1207,"y":242,"w":256,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":16,"w":256,"h":226},
+	"sourceSize": {"w":256,"h":256}
+},
+"Monkey_Wizard/Monkey_Wizard_3":
+{
+	"frame": {"x":515,"y":407,"w":256,"h":226},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":16,"w":256,"h":226},
+	"sourceSize": {"w":256,"h":256}
 },
 "Tree/palmTopView2":
 {
-	"frame": {"x":323,"y":64,"w":40,"h":40},
+	"frame": {"x":773,"y":527,"w":80,"h":80},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":40,"h":40},
-	"sourceSize": {"w":40,"h":40}
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":80},
+	"sourceSize": {"w":80,"h":80}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":384,"h":126},
-	"scale": "0.125",
-	"smartupdate": "$TexturePacker:SmartUpdate:b47be8574d41c81356b5c44ca5beacb9:a453cfd3932699a24fa7511fe39e5ed3:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"size": {"w":1721,"h":995},
+	"scale": "0.25",
+	"smartupdate": "$TexturePacker:SmartUpdate:c44a14b4e017450087b52bfce3f5f61b:031971dd4821ab3c70b98c6243b21e14:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }
