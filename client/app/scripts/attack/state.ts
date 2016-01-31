@@ -4,12 +4,10 @@
 namespace Attack {
   export class State extends Phaser.State {
     player: Player;
-    countdown: number;
 
     create() {
       console.log('Game Started');
       this.player = this.add.existing(new Player(this));
-      this.countdown = 10;
     }
   }
 
@@ -19,4 +17,3 @@ namespace Attack {
     }
   }
 }
-
