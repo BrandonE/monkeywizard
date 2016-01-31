@@ -294,11 +294,8 @@ namespace Game {
                 y = this.game.height - 40;
             }
 
-            this.add.text(
-                x,
-                y,
-                'M' + (index + 1).toString(),
-                {}
+            this.add.existing(
+                new Generic.Banana(this, x, y, banana.player_x, banana.player_y)
             );
         }
     }

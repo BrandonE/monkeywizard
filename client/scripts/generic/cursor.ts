@@ -26,22 +26,6 @@ namespace Generic {
         }
 
         update(): void {
-
-            // Touch
-            /*
-             var distance = Phaser.Point.distance(this, this.pointer);
-             if (this.pointer.isDown && distance > 45) {
-             this.destination = new Phaser.Point(this.pointer.x, this.pointer.y);
-             this.isMoving = true;
-             }
-             if (this.isMoving) {
-             this.move();
-             } else {
-             this.idle();
-             }
-
-             */
-            // WASD
             if (this.wasd.left.isDown && this.x > 300) {
                 this.x -= this.keySpeed;
             } else if (this.wasd.right.isDown && this.x < this.game.width - 300) {
