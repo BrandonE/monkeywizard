@@ -51,9 +51,8 @@ namespace Generic {
             var boundsB = spriteB.getBounds();
             boundsB.x += boundsB.width/2;
             boundsB.y += boundsB.height/2;
-            boundsB.height = 5;
+            boundsB.height = 10;
             boundsB.width = 5;
-            console.log(boundsB);
 
             return Phaser.Rectangle.intersects(boundsA, boundsB);
         }
