@@ -2,7 +2,7 @@
 'use strict';
 
 namespace Generic {
-    export class Cursor extends Phaser.Sprite {
+    export class Wizard extends Phaser.Sprite {
         state: Phaser.State;
         pointer: Phaser.Pointer;
         wasd: Generic.WASD;

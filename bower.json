@@ -1,8 +1,10 @@
 {
   "name": "Monkey Wizard: Simian Sorcery",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "authors": [
-    "Sean Spradlin <seanspradlin@gmail.com>"
+    "Brandon Evans <admin@brandonevans.org>",
+    "Sean Spradlin <seanspradlin@gmail.com>",
+    "Allen Phelps"
   ],
   "license": "MIT",
   "ignore": [

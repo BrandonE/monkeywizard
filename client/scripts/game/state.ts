@@ -445,7 +445,7 @@ namespace Game {
         }
     }
 
-    export class Player extends Generic.Cursor {
+    export class Player extends Generic.Wizard {
         constructor(state: State) {
             super(state);
         }
