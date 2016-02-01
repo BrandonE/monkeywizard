@@ -27,7 +27,7 @@ namespace Generic {
 
             setTimeout(function() {
                 self.kill();
-            }, 3000);
+            }, 5000);
         }
     }
 }
