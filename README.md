@@ -6,6 +6,14 @@ Command a cult of banana conjuring simian sorcerers to defeat your wizard oppone
 - WASD: Move / Defend
 - Mouse: During the attack phase, click in any direction to command a minion to throw a banana in that direction such that it intersects with the position you are currently at. Arrows will appear to show you where you have set your attacks. After the time runs out, you will have to defend against your opponent's attacks.
 
+## Installation
+```
+npm install
+bower install
+gulp build
+node server/
+```
+
 ## Credits
 - Brandon Evans: Concept, Server Programming, Client Programming
 - Sean Spradlin: Client Programming
