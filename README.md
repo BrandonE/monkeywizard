@@ -25,10 +25,12 @@ node server/
 - [gulp.js] (http://gulpjs.com/)
 
 ## Credits
-- Brandon Evans: Concept, Server Programming, Client Programming
+- Brandon Evans: Server Programming, Client Programming, Concept (Heavily inspired by [Undertale](http://undertale.com/)'s enemy attack sequences)
 - Sean Spradlin: Client Programming
 - Allen Phelps: Client Programming
-- Robert Ackley: Graphics (Excluding the title screen background).
+- Robert Ackley: Graphics (Excluding the title screen background made by [Michaël Defroyennes](http://mdefroyennes.blogspot.com/))
 - Aaron Trimble: Music (Battle theme inspired by [Aztec percussion](https://www.youtube.com/watch?v=D28FAFJqMcM))
 - Wiley Walker: Creative Input
 - Kate Williams: Creative Input
+
+Created at [Global Game Jam 2016 at Vanderbilt University](http://globalgamejam.org/2016/games/monkey-wizard).
