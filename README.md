@@ -14,11 +14,21 @@ gulp build
 node server/
 ```
 
+## Technologies Used
+- [JavaScript](https://en.wikipedia.org/wiki/JavaScript)
+- [TypeScript] (http://www.typescriptlang.org/)
+- [Node.js] (https://nodejs.org/en/)
+- [Phaser] (http://phaser.io/)
+- [Socket.IO] (http://socket.io/)
+- [npm] (https://www.npmjs.com/)
+- [Bower] (http://bower.io/)
+- [gulp.js] (http://gulpjs.com/)
+
 ## Credits
 - Brandon Evans: Concept, Server Programming, Client Programming
 - Sean Spradlin: Client Programming
 - Allen Phelps: Client Programming
 - Robert Ackley: Graphics (Excluding the title screen background).
-- Aaron Trimble: Music [Aztec percussion](Battle theme inspired by (https://www.youtube.com/watch?v=D28FAFJqMcM)
+- Aaron Trimble: Music (Battle theme inspired by [Aztec percussion](https://www.youtube.com/watch?v=D28FAFJqMcM))
 - Wiley Walker: Creative Input
 - Kate Williams: Creative Input
