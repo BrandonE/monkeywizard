@@ -4,7 +4,8 @@
 namespace Menu {
     export class State extends Phaser.State {
         title: Phaser.Text;
-        start: Phaser.Text
+        start: Phaser.Text;
+        howToPlayer: Phaser.Text;
         monkeyFace: Phaser.Sprite;
         banana1L: Phaser.Sprite;
         banana2L: Phaser.Sprite;
@@ -26,6 +27,14 @@ namespace Menu {
 
             this.start.events.onInputDown.add(function() {
                 this.game.state.start('Game');
+            }, this);
+
+            this.howToPlayer = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 300, 'How To Play', { font: "35px Arial", fill: "#ffff00", align: "center" });
+            this.howToPlayer.anchor.setTo(0.5);
+            this.howToPlayer.inputEnabled = true;
+
+            this.howToPlayer.events.onInputDown.add(function() {
+                window.open('https://github.com/BrandonE/monkeywizard');
             }, this);
 
             this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
