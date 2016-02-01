@@ -3,7 +3,8 @@
 
 namespace Menu {
     export class State extends Phaser.State {
-        text: Phaser.Text;
+        title: Phaser.Text;
+        start: Phaser.Text
         monkeyFace: Phaser.Sprite;
         banana1L: Phaser.Sprite;
         banana2L: Phaser.Sprite;
@@ -15,8 +16,17 @@ namespace Menu {
         create() {
             console.log('Menu Loaded');
             this.game.add.sprite(0, 0, 'backdrop');
-            this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'Monkey Wizards\n - Simian Sorcery -\n\nClick to Start!', { font: "35px Arial", fill: "#ffff00", align: "center" });
-            this.text.anchor.setTo(0.5);
+
+            this.title = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'Monkey Wizard\n - Simian Sorcery -', { font: "35px Arial", fill: "#ffff00", align: "center" });
+            this.title.anchor.setTo(0.5);
+
+            this.start = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 240, 'Start', { font: "35px Arial", fill: "#ffff00", align: "center" });
+            this.start.anchor.setTo(0.5);
+            this.start.inputEnabled = true;
+
+            this.start.events.onInputDown.add(function() {
+                this.game.state.start('Game');
+            }, this);
 
             this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
             this.monkeyFace.anchor.setTo(0.5);
@@ -48,10 +58,6 @@ namespace Menu {
             this.banana1R.angle -= 1;
             this.banana2R.angle -= 2;
             this.banana3R.angle -= 3;
-
-            if (this.input.activePointer.isDown) {
-                this.game.state.start('Game');
-            }
         }
     }
 }
