@@ -1,4 +1,4 @@
-# Monkey Wizard: Simian Sorcerers
+# Monkey Wizard: Simian Sorcery
 
 Command a cult of banana conjuring simian sorcerers to defeat your wizard opponent. Visit [the game website](http://monkeywizard.herokuapp.com) where you will be transported to the top of an Aztec temple, where you will soon be matched up against another Monkey Wizard.
 
