@@ -32,10 +32,9 @@ namespace Generic {
         }
 
         update() {
-
             this.angle += 5;
 
-            if (!this.killed && this.state.player && this.checkOverlap(this, this.state.player)) {
+            if (!this.killed && this.state.id && this.checkOverlap(this, this.state.player)) {
                 this.killed = true;
 
                 this.state.socket.emit(
