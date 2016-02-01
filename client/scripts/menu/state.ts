@@ -34,7 +34,7 @@ namespace Menu {
             this.howToPlayer.inputEnabled = true;
 
             this.howToPlayer.events.onInputDown.add(function() {
-                window.open('https://github.com/BrandonE/monkeywizard');
+                window.open('https://github.com/BrandonE/monkeywizard/blob/master/README.md');
             }, this);
 
             this.monkeyFace = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY - 150, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
