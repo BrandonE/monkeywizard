@@ -320,6 +320,11 @@ namespace Game {
         }
 
         end() {
+            this.id = null;
+            this.players = [null, null];
+            this.clientPlayerNum = null;
+            this.attacking = false;
+
             this.gameIdText.kill();
             this.playerNumText.kill();
 
