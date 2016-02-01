@@ -1,6 +1,6 @@
 # Monkey Wizard: Simian Sorcerers
 
-Command a cult of banana conjuring simian sorcerers to defeat your wizard opponent. Visit (http://monkeywizard.herokuapp.com)[the game website] where you will be transported to the top of an Aztec temple, where you will soon be matched up against another Monkey Wizard.
+Command a cult of banana conjuring simian sorcerers to defeat your wizard opponent. Visit [the game website](http://monkeywizard.herokuapp.com) where you will be transported to the top of an Aztec temple, where you will soon be matched up against another Monkey Wizard.
 
 ## How To Play
 - WASD: Move / Defend
@@ -11,6 +11,6 @@ Command a cult of banana conjuring simian sorcerers to defeat your wizard oppone
 - Sean Spradlin: Client Programming
 - Allen Phelps: Client Programming
 - Robert Ackley: Graphics (Excluding the title screen background).
-- Aaron Trimble: Music (Battle theme inspired by (https://www.youtube.com/watch?v=D28FAFJqMcM)[Aztec percussion]
+- Aaron Trimble: Music [Aztec percussion](Battle theme inspired by (https://www.youtube.com/watch?v=D28FAFJqMcM)
 - Wiley Walker: Creative Input
 - Kate Williams: Creative Input
