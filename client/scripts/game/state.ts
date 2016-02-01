@@ -76,6 +76,10 @@ namespace Game {
                     self.players = gameSent.players;
                     self.clientPlayerNum = playerNum;
 
+                    if (self.gameIdText) {
+                        self.gameIdText.kill();
+                    }
+                    
                     self.gameIdText = self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
 
                     if (playerNum) {
@@ -85,10 +89,6 @@ namespace Game {
 
                         self.playerNumText = self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
                     }
-                }
-
-                if (self.gameIdText) {
-                    self.gameIdText.kill();
                 }
 
                 if (self.players[0]) {
