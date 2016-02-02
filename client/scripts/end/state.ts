@@ -30,6 +30,10 @@ namespace End {
 
             this.playAgain.events.onInputDown.add(function() {
                 self.fanfare.pause();
+                self.background.kill();
+                self.results.kill();
+                self.playAgain.kill();
+                self.menu.kill();
                 self.game.state.start('Game');
             }, this);
 
@@ -39,6 +43,10 @@ namespace End {
 
             this.menu.events.onInputDown.add(function() {
                 self.fanfare.pause();
+                self.background.kill();
+                self.results.kill();
+                self.playAgain.kill();
+                self.menu.kill();
                 self.game.state.start('Menu');
             }, this);
 

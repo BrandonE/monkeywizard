@@ -23,6 +23,11 @@ namespace Game {
         player1HealthText: Phaser.Text;
         player2HealthText: Phaser.Text;
         bananaCounter: Phaser.Text;
+        background: Phaser.Sprite;
+        palm1: Phaser.Sprite;
+        palm2: Phaser.Sprite;
+        palm3: Phaser.Sprite;
+        palm4: Phaser.Sprite;
         minions: Phaser.Sprite[];
         attackGraphics = [];
         timeout;
@@ -32,19 +37,21 @@ namespace Game {
             self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
             this.sound = this.sound.play('background-music', 100, true);
+            this.background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            this.background.height = this.game.height;
+            this.background.width = this.game.width;
 
-            var background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
-            background.height = this.game.height;
-            background.width = this.game.width;
+            this.palm1 = this.add.image(110, 100, 'sprites', 'Tree/palmTopView2');
+            this.palm1.anchor.setTo(0.5);
 
-            var palm1 = this.add.image(100 ,100, 'sprites', 'Tree/palmTopView2');
-            palm1.anchor.setTo(0.5);
-            var palm2 = this.add.image(this.game.width -100 , this.game.height - 100, 'sprites', 'Tree/palmTopView2');
-            palm2.anchor.setTo(0.5);
-            var palm3 = this.add.image(this.game.width -100 , 100, 'sprites', 'Tree/palmTopView2');
-            palm3.anchor.setTo(0.5);
-            var palm4 = this.add.image(100 ,this.game.height - 100, 'sprites', 'Tree/palmTopView2');
-            palm4.anchor.setTo(0.5);
+            this.palm2 = this.add.image(this.game.width - 100, this.game.height - 100, 'sprites', 'Tree/palmTopView2');
+            this.palm2.anchor.setTo(0.5);
+
+            this.palm3 = this.add.image(this.game.width - 100, 100, 'sprites', 'Tree/palmTopView2');
+            this.palm3.anchor.setTo(0.5);
+
+            this.palm4 = this.add.image(110, this.game.height - 100, 'sprites', 'Tree/palmTopView2');
+            this.palm4.anchor.setTo(0.5);
 
 
             this.config = this.cache.getJSON('config');
@@ -331,6 +338,11 @@ namespace Game {
             this.clientPlayerNum = null;
             this.attacking = false;
 
+            this.background.kill();
+            this.palm1.kill();
+            this.palm2.kill();
+            this.palm3.kill();
+            this.palm4.kill();
             this.gameIdText.kill();
             this.playerNumText.kill();
 
