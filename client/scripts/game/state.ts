@@ -23,6 +23,7 @@ namespace Game {
         player1HealthText: Phaser.Text;
         player2HealthText: Phaser.Text;
         bananaCounter: Phaser.Text;
+        minions: Phaser.Sprite[];
         attackGraphics = [];
         timeout;
 
@@ -57,6 +58,8 @@ namespace Game {
                 }
             }, this);
 
+            this.minions = [];
+
             this.socket = io.connect();
 
             this.socket.on('user connected', function(playerNum, gameSent) {
@@ -79,7 +82,7 @@ namespace Game {
                     if (self.gameIdText) {
                         self.gameIdText.kill();
                     }
-                    
+
                     self.gameIdText = self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
 
                     if (playerNum) {
@@ -320,6 +323,9 @@ namespace Game {
         }
 
         end() {
+            var minion,
+                m;
+
             this.id = null;
             this.players = [null, null];
             this.clientPlayerNum = null;
@@ -327,6 +333,15 @@ namespace Game {
 
             this.gameIdText.kill();
             this.playerNumText.kill();
+
+            for (m = 0; m < this.minions.length; m++) {
+                minion = this.minions[m];
+
+                if (minion) {
+                    minion.killed = true;
+                    minion.kill();
+                }
+            }
 
             this.socket.close();
 
@@ -439,8 +454,10 @@ namespace Game {
                 y = this.game.height - 40;
             }
 
-            this.add.existing(
-                new Generic.Minion(this, waveIndex, bananaIndex, x, y, banana.player_x, banana.player_y)
+            this.minions.push(
+                this.add.existing(
+                    new Generic.Minion(this, waveIndex, bananaIndex, x, y, banana.player_x, banana.player_y)
+                )
             );
         }
     }
