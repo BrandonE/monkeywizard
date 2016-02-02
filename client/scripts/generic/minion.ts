@@ -20,9 +20,11 @@ namespace Generic {
             this.body.allowRotation = false;
 
             setTimeout(function() {
-                state.game.add.existing(
-                    new Generic.Banana(state, waveIndex, bananaIndex, x, y, player_x, player_y)
-                );
+                if (state.id) {
+                    state.game.add.existing(
+                        new Generic.Banana(state, waveIndex, bananaIndex, x, y, player_x, player_y)
+                    );
+                }
             }, bananaIndex * 100);
 
             setTimeout(function() {
