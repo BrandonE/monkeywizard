@@ -1,7 +1,7 @@
 /// <reference path="../../typings/tsd.d.ts" />
 'use strict';
 
-class MonkeyWizards extends Phaser.Game {
+class MonkeyWizard extends Phaser.Game {
     constructor() {
         super(1280, 720, Phaser.AUTO, '');
         this.state.add('Boot', Boot.State);
@@ -13,4 +13,4 @@ class MonkeyWizards extends Phaser.Game {
     }
 }
 
-new MonkeyWizards();
+new MonkeyWizard();

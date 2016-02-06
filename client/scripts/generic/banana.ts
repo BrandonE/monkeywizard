@@ -3,7 +3,6 @@
 
 namespace Generic {
     export class Banana extends Phaser.Sprite {
-        state: Phaser.State;
         killed: boolean = false;
         waveIndex: number;
         bananaIndex: number;
@@ -18,7 +17,6 @@ namespace Generic {
                 playerPoint: Phaser.Point = new Phaser.Point(player_x, player_y),
                 angleDegrees: number = point.angle(playerPoint, true);
 
-            this.state = state;
             this.waveIndex = waveIndex;
             this.bananaIndex = bananaIndex;
             this.anchor.setTo(0.5);
@@ -34,11 +32,18 @@ namespace Generic {
         update() {
             this.angle += 5;
 
-            if (!this.killed && this.state.id && this.checkOverlap(this, this.state.player)) {
+            if (
+                !this.killed && this.game.state.states.Game.id &&
+                    this.checkOverlap(this, this.game.state.states.Game.player)
+            ) {
                 this.killed = true;
 
-                this.state.socket.emit(
-                    'player hit', this.waveIndex, this.bananaIndex, this.state.player.x, this.state.player.y
+                this.game.state.states.Game.socket.emit(
+                    'player hit',
+                    this.waveIndex,
+                    this.bananaIndex,
+                    this.game.state.states.Game.player.x,
+                    this.game.state.states.Game.player.y
                 );
 
                 this.kill();
@@ -46,8 +51,8 @@ namespace Generic {
         }
 
         checkOverlap(spriteA, spriteB) {
-            var boundsA = spriteA.getBounds();
-            var boundsB = spriteB.getBounds();
+            var boundsA = spriteA.getBounds(),
+                boundsB = spriteB.getBounds();
 
             return Phaser.Rectangle.intersects(boundsA, boundsB);
         }

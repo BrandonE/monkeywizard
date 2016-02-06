@@ -9,7 +9,7 @@ namespace Game {
         clientPlayerNum: number;
         player: Player;
         pointer: Phaser.Pointer;
-        waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]];
+        waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][];
         attacking: boolean;
         attackTimer: number;
         banana: number;
@@ -22,21 +22,19 @@ namespace Game {
         yourHealthText: Phaser.Text;
         opponentHealthText: Phaser.Text;
         bananaCounter: Phaser.Text;
-        background: Phaser.Sprite;
-        palm1: Phaser.Sprite;
-        palm2: Phaser.Sprite;
-        palm3: Phaser.Sprite;
-        palm4: Phaser.Sprite;
+        background: Phaser.Image;
+        palm1: Phaser.Image;
+        palm2: Phaser.Image;
+        palm3: Phaser.Image;
+        palm4: Phaser.Image;
         minions: Phaser.Sprite[];
-        attackGraphics = [];
+        attackLabels: Phaser.Text[];
+        attackGraphics: PIXI.Graphics[];
         timeout;
 
         create() {
             var self = this;
 
-            this.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
-
-            console.log(this.theme);
             if (!this.theme) {
                 this.theme = this.sound.play('theme-full', 0.5);
 
@@ -73,6 +71,9 @@ namespace Game {
                 }
             }, this);
 
+            this.waves = [[]];
+            this.attackGraphics = [];
+            this.attackLabels = [];
             this.minions = [];
 
             this.socket = io.connect();
@@ -97,10 +98,10 @@ namespace Game {
                         self.gameIdText.kill();
                     }
 
-                    self.gameIdText = self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
+                    self.gameIdText = self.add.text(10, 0, 'Game ID: ' + self.id, Generic.Fonts.fontStyle);
                 }
 
-                self.showHealth(self);
+                self.showHealth();
 
                 if (self.players[0] && self.players[1]) {
                     self.attackStart();
@@ -133,7 +134,7 @@ namespace Game {
                 }
 
                 self.activeConnectionsText = self.add.text(
-                    0, 25, 'Active Connections: ' + activeConnections.toString(), self.fontStyle
+                    10, 25, 'Active Connections: ' + activeConnections.toString(), Generic.Fonts.fontStyle
                 );
             });
 
@@ -153,7 +154,7 @@ namespace Game {
                     player = self.players[playerNum - 1];
                     player.health = health;
 
-                    self.showHealth(self);
+                    self.showHealth();
                 }
             });
 
@@ -227,21 +228,19 @@ namespace Game {
                     )
                 );
 
-                this.attackGraphics.push(
+                this.attackLabels.push(
                     this.add.text(this.player.x - 10, this.player.y, this.banana.toString(), {})
                 );
             }
         }
 
         attackStart() {
-            self.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
-
             this.attacking = true;
             this.banana = 0;
             this.showBananaCounter();
 
             this.attackTimer = 11;
-            this.attackTimeout(this);
+            this.attackTimeout();
         }
 
         defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
@@ -249,21 +248,34 @@ namespace Game {
                 this.gameStatusText.kill();
             }
 
-            this.gameStatusText = this.add.text(this.game.width - 690, this.game.height - 40, 'Defend!', { font: "25px Arial", fill: "#ffff00", align: "center" });
+            this.gameStatusText = this.add.text(
+                this.game.width - 690,
+                this.game.height - 40,
+                'Defend!',
+                Generic.Fonts.fontStyle
+            );
 
             var self = this,
                 wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
                 banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
+                attackLabel,
                 attackGraphic,
                 w: number,
                 b: number,
+                al,
                 ag;
+
+            for (al = 0; al < self.attackLabels.length; al++) {
+                attackLabel = self.attackLabels[al];
+                attackLabel.kill();
+            }
 
             for (ag = 0; ag < self.attackGraphics.length; ag++) {
                 attackGraphic = self.attackGraphics[ag];
                 attackGraphic.kill();
             }
 
+            self.attackLabels = [];
             self.attackGraphics = [];
 
             for (w = 0; w < waves.length; w++) {
@@ -311,30 +323,30 @@ namespace Game {
                 clearTimeout(this.timeout);
             }
 
-            this.game.state.states.End.theme = this.theme;
-
             this.game.state.start('End');
         }
 
-        attackTimeout(self) {
-            self.attackTimer--;
+        attackTimeout() {
+            var self = this;
 
-            if (self.attackTimer >= 0) {
-                if (self.gameStatusText) {
-                    self.gameStatusText.kill();
+            this.attackTimer--;
+
+            if (this.attackTimer >= 0) {
+                if (this.gameStatusText) {
+                    this.gameStatusText.kill();
                 }
 
                 this.gameStatusText = this.add.text(
-                    self.game.width - 690, self.game.height - 40, 'Attack! ' + self.attackTimer, self.fontStyle
+                    self.game.width - 690, self.game.height - 40, 'Attack! ' + self.attackTimer, Generic.Fonts.fontStyle
                 );
 
-                self.timeout = setTimeout(function() {
-                    self.attackTimeout(self);
+                this.timeout = setTimeout(function() {
+                    self.attackTimeout();
                 }, 1000);
             } else {
-                self.attacking = false;
-                self.socket.emit('player attack', self.waves);
-                self.waves = [[]];
+                this.attacking = false;
+                this.socket.emit('player attack', this.waves);
+                this.waves = [[]];
             }
         }
 
@@ -346,42 +358,42 @@ namespace Game {
             this.bananaCounter = this.add.text(
                 this.game.width - 290,
                 0,
-                'Banana Count: ' + (this.config.maxBananas - this.banana.toString()) + ' / ' + this.config.maxBananas,
-                this.fontStyle
+                'Banana Count: ' + (this.config.maxBananas - this.banana) + ' / ' + this.config.maxBananas,
+                Generic.Fonts.fontStyle
             );
         }
 
-        showHealth(self) {
+        showHealth() {
             var health,
                 text;
 
-            if (self.yourHealthText) {
-                self.yourHealthText.kill();
+            if (this.yourHealthText) {
+                this.yourHealthText.kill();
             }
 
-            self.yourHealthText = self.add.text(
+            this.yourHealthText = this.add.text(
                 10,
-                self.game.height - 40,
-                'Your Health: ' + self.players[self.clientPlayerNum - 1].health + ' / ' + self.config.maxHealth,
-                self.fontStyle
+                this.game.height - 40,
+                'Your Health: ' + this.players[this.clientPlayerNum - 1].health + ' / ' + this.config.maxHealth,
+                Generic.Fonts.fontStyle
             );
 
-            if (self.players[0] && self.players[1]) {
-                health = (self.clientPlayerNum === 1) ? self.players[1].health : self.players[0].health;
-                text = 'Opponent\'s Health: ' + health + ' / ' + self.config.maxHealth;
+            if (this.players[0] && this.players[1]) {
+                health = (this.clientPlayerNum === 1) ? this.players[1].health : this.players[0].health;
+                text = 'Opponent\'s Health: ' + health + ' / ' + this.config.maxHealth;
             } else {
                 text = 'Waiting for Opponent...';
             }
 
-            if (self.opponentHealthText) {
-                self.opponentHealthText.kill();
+            if (this.opponentHealthText) {
+                this.opponentHealthText.kill();
             }
 
-            self.opponentHealthText = self.add.text(
-                self.game.width - 310,
-                self.game.height - 40,
+            this.opponentHealthText = this.add.text(
+                this.game.width - 310,
+                this.game.height - 40,
                 text,
-                self.fontStyle
+                Generic.Fonts.fontStyle
             );
         }
 

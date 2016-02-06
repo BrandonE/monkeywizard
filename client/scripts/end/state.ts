@@ -3,9 +3,10 @@
 
 namespace End {
     export class State extends Phaser.State {
-        message: string;
-        background: Phaser.Sprite;
+        clientPlayerNum: number;
+        winningPlayerNum: number;
         fanfare: Phaser.Sound;
+        background: Phaser.Image;
         results: Phaser.Text;
         playAgain: Phaser.Text;
         menu: Phaser.Text;
@@ -23,7 +24,7 @@ namespace End {
                     message = 'Opponent disconnected';
                 }
 
-                this.theme.pause();
+                this.game.state.states.Game.theme.pause();
                 this.game.state.states.Game.theme = null;
                 this.fanfare = this.sound.play('fanfare', 0.5);
             } else {
@@ -35,14 +36,19 @@ namespace End {
             }
 
             this.background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
-
             this.background.height = this.game.height;
             this.background.width = this.game.width;
 
-            this.results = this.add.text(this.world.centerX, this.world.centerY - 100, message, { font: "60px Arial", fill: "#ffff00", align: "center" });
+            this.results = this.add.text(
+                this.world.centerX, this.world.centerY - 100, message, Generic.Fonts.biggerFontStyle
+            );
+
             this.results.anchor.set(0.5);
 
-            this.playAgain = this.add.text(this.world.centerX, this.world.centerY + 100, "Play Again", { font: "65px Arial", fill: "#ffff00", align: "center" });
+            this.playAgain = this.add.text(
+                this.world.centerX, this.world.centerY + 100, 'Play Again', Generic.Fonts.biggerFontStyle
+            );
+
             this.playAgain.anchor.set(0.5);
             this.playAgain.inputEnabled = true;
 
@@ -51,34 +57,37 @@ namespace End {
                     self.fanfare.pause();
                 }
 
-                self.background.kill();
-                self.results.kill();
-                self.playAgain.kill();
-                self.menu.kill();
+                self.killAssets();
                 self.game.state.start('Game');
             }, this);
 
-            this.menu = this.add.text(this.world.centerX, this.world.centerY + 180, "Back to Menu", { font: "65px Arial", fill: "#ffff00", align: "center" });
+            this.menu = this.add.text(
+                this.world.centerX, this.world.centerY + 180, 'Back to Menu', Generic.Fonts.biggerFontStyle
+            );
+
             this.menu.anchor.set(0.5);
             this.menu.inputEnabled = true;
 
             this.menu.events.onInputDown.add(function() {
-                if (self.theme) {
-                    self.theme.pause();
-                    this.game.state.states.Game.theme = null;
+                if (self.game.state.states.Game) {
+                    self.game.state.states.Game.theme.pause();
+                    self.game.state.states.Game.theme = null;
                 }
 
                 if (self.fanfare) {
                     self.fanfare.pause();
                 }
 
-                self.background.kill();
-                self.results.kill();
-                self.playAgain.kill();
-                self.menu.kill();
+                self.killAssets();
                 self.game.state.start('Menu');
             }, this);
+        }
 
+        killAssets() {
+            this.background.kill();
+            this.results.kill();
+            this.playAgain.kill();
+            this.menu.kill();
         }
     }
 }

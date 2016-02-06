@@ -28,6 +28,7 @@ declare module SocketIOClient {
         listeners(event: string): Function[];
         hasListeners(event: string): boolean;
         connected: boolean;
+        close() : Function;
     }
 
     interface ManagerStatic {

@@ -1,6 +1,7 @@
 /// <reference path="phaser.d.ts" />
 /// <reference path="socket.io-client.d.ts" />
 /// <reference path="../client/scripts/generic/banana.ts" />
+/// <reference path="../client/scripts/generic/fonts.ts" />
 /// <reference path="../client/scripts/generic/minion.ts" />
 /// <reference path="../client/scripts/generic/wasd.ts" />
 /// <reference path="../client/scripts/generic/wizard.ts" />
