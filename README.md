@@ -3,8 +3,8 @@
 Command a cult of banana conjuring simian sorcerers to defeat your wizard opponent. Visit [the game website](http://monkeywizard.herokuapp.com) where you will be transported to the top of an Aztec temple, where you will soon be matched up against another Monkey Wizard.
 
 ## How To Play
-- WASD: Move / Defend
-- Mouse: During the attack phase, click in any direction to command a minion to throw a banana in that direction such that it intersects with the position you are currently at. Arrows will appear to show you where you have set your attacks. After the time runs out, you will have to defend against your opponent's attacks.
+- WASD: Move / Dodge
+- Mouse: During the attack phase, click in any direction to command a minion to throw a banana in that direction such that it intersects with the position you are currently at. Arrows will appear to show you where you have set your attacks. After the time runs out, you will have to dodge your opponent's attacks.
 
 ## Installation
 ```

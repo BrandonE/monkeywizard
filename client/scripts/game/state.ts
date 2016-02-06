@@ -143,7 +143,7 @@ namespace Game {
 
                 if (self.clientPlayerNum) {
                     waves = turn[self.clientPlayerNum - 1];
-                    self.defend(waves);
+                    self.dodge(waves);
                 }
             });
 
@@ -243,7 +243,7 @@ namespace Game {
             this.attackTimeout();
         }
 
-        defend(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
+        dodge(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
             if (this.gameStatusText) {
                 this.gameStatusText.kill();
             }
@@ -251,7 +251,7 @@ namespace Game {
             this.gameStatusText = this.add.text(
                 this.game.width - 690,
                 this.game.height - 40,
-                'Defend!',
+                'Dodge!',
                 Generic.Fonts.fontStyle
             );
 
