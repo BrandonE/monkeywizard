@@ -88,11 +88,45 @@ module.exports = function Game(io, config, games) {
     };
 
     this.attack = function attack(attack, playerNum) {
+        var transformedAttack = [],
+            transformedWave,
+            transformedBanana,
+            bananaCount = 0,
+            wave,
+            banana,
+            w,
+            b;
+
+        for (w = 0; w < attack.length; w++) {
+            wave = attack[w];
+            transformedWave = [];
+
+            for (b = 0; b < wave.length; b++) {
+                banana = wave[b];
+
+                // TODO: Randomly transform certain bananas into power-ups / power-downs.
+                transformedBanana = banana;
+
+                transformedWave.push(transformedBanana);
+                bananaCount++;
+
+                if (bananaCount >= config.maxBananas) {
+                    break;
+                }
+            }
+
+            transformedAttack.push(transformedWave);
+
+            if (bananaCount >= config.maxBananas) {
+                break;
+            }
+        }
+
         // Prepare to send the attack to the other player.
         if (playerNum === 1) {
-            self.nextTurn[1] = attack;
+            self.nextTurn[1] = transformedAttack;
         } else {
-            self.nextTurn[0] = attack;
+            self.nextTurn[0] = transformedAttack;
         }
 
         if (self.nextTurn[0] && self.nextTurn[1]) {
