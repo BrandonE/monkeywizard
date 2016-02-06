@@ -37,10 +37,10 @@ namespace Game {
 
             this.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
-            this.theme = this.sound.play('theme-full', 100);
+            this.theme = this.sound.play('theme-full', 0.5);
 
             this.theme.onStop.addOnce(function() {
-                this.theme = this.sound.play('theme-loop', 100, true);
+                this.theme = this.sound.play('theme-loop', 0.5, true);
             }, this);
 
             this.background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
