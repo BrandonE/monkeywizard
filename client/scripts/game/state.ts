@@ -17,11 +17,10 @@ namespace Game {
         socket: SocketIOClient.Socket;
         theme: Phaser.Sound;
         gameIdText: Phaser.Text;
-        playerNumText: Phaser.Text;
         activeConnectionsText: Phaser.Text;
         gameStatusText : Phaser.Text;
-        player1HealthText: Phaser.Text;
-        player2HealthText: Phaser.Text;
+        yourHealthText: Phaser.Text;
+        opponentHealthText: Phaser.Text;
         bananaCounter: Phaser.Text;
         background: Phaser.Sprite;
         palm1: Phaser.Sprite;
@@ -37,11 +36,14 @@ namespace Game {
 
             this.fontStyle = { font: "25px Arial", fill: "#ffff00", align: "center" };
 
-            this.theme = this.sound.play('theme-full', 0.5);
+            console.log(this.theme);
+            if (!this.theme) {
+                this.theme = this.sound.play('theme-full', 0.5);
 
-            this.theme.onStop.addOnce(function() {
-                this.theme = this.sound.play('theme-loop', 0.5, true);
-            }, this);
+                this.theme.onStop.addOnce(function() {
+                    this.theme = this.sound.play('theme-loop', 0.5, true);
+                }, this);
+            }
 
             this.background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
             this.background.height = this.game.height;
@@ -77,8 +79,7 @@ namespace Game {
 
             this.socket.on('user connected', function(playerNum, gameSent) {
                 var player,
-                    playerIndex,
-                    text;
+                    playerIndex;
 
                 if (self.id) {
                     if (playerNum) {
@@ -97,49 +98,9 @@ namespace Game {
                     }
 
                     self.gameIdText = self.add.text(0, 0, 'Game ID: ' + self.id, self.fontStyle);
-
-                    if (playerNum) {
-                        if (self.playerNumText) {
-                            self.playerNumText.kill();
-                        }
-
-                        self.playerNumText = self.add.text(0, 25, 'Player #' + playerNum, self.fontStyle);
-                    }
                 }
 
-                if (self.players[0]) {
-                    text = 'Player 1 Health: ' + self.players[0].health + ' / ' + self.config.maxHealth;
-                } else {
-                    text = 'Waiting for Player 1...';
-                }
-
-                if (self.player1HealthText) {
-                    self.player1HealthText.kill();
-                }
-
-                self.player1HealthText = self.add.text(
-                    0,
-                    self.game.height - 40,
-                    text,
-                    self.fontStyle
-                );
-
-                if (self.players[1]) {
-                    text = 'Player 2 Health: ' + self.players[1].health + ' / ' + self.config.maxHealth;
-                } else {
-                    text = 'Waiting for Player 2...';
-                }
-
-                if (self.player2HealthText) {
-                    self.player2HealthText.kill();
-                }
-
-                self.player2HealthText = self.add.text(
-                    self.game.width - 310,
-                    self.game.height - 40,
-                    text,
-                    self.fontStyle
-                );
+                self.showHealth(self);
 
                 if (self.players[0] && self.players[1]) {
                     self.attackStart();
@@ -147,11 +108,15 @@ namespace Game {
             });
 
             this.socket.on('user disconnected', function(playerNum) {
-                var playerIndex;
+                var winningPlayerNum,
+                    playerIndex;
 
                 if (playerNum) {
                     if (self.players[0] && self.players[1]) {
-                        self.game.state.states.End.message = 'Player #' + playerNum + ' has forfeited!';
+                        winningPlayerNum = (playerNum === 1) ? 2 : 1;
+
+                        self.game.state.states.End.clientPlayerNum = self.clientPlayerNum;
+                        self.game.state.states.End.winningPlayerNum = winningPlayerNum;
                         self.game.state.states.End.turns = null;
 
                         self.end();
@@ -168,7 +133,7 @@ namespace Game {
                 }
 
                 self.activeConnectionsText = self.add.text(
-                    0, 50, 'Active Connections: ' + activeConnections.toString(), self.fontStyle
+                    0, 25, 'Active Connections: ' + activeConnections.toString(), self.fontStyle
                 );
             });
 
@@ -182,41 +147,21 @@ namespace Game {
             });
 
             this.socket.on('player health changed', function(playerNum, health) {
-                var player,
-                    x;
+                var player;
 
                 if (playerNum) {
                     player = self.players[playerNum - 1];
                     player.health = health;
 
-                    if (playerNum === 1) {
-                        if (self.player1HealthText) {
-                            self.player1HealthText.kill();
-                        }
-
-                        self.player1HealthText = self.add.text(
-                            0,
-                            self.game.height - 40,
-                            'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
-                            self.fontStyle
-                        );
-                    } else {
-                        if (self.player2HealthText) {
-                            self.player2HealthText.kill();
-                        }
-
-                        self.player2HealthText = self.add.text(
-                            self.game.width - 310,
-                            self.game.height - 40,
-                            'Player ' + playerNum + ' Health: ' + player.health + ' / ' + self.config.maxHealth,
-                            self.fontStyle
-                        );
-                    }
+                    self.showHealth(self);
                 }
             });
 
             this.socket.on('end', function(losingPlayerNum, turns) {
-                self.game.state.states.End.message = 'Player #' + losingPlayerNum + ' has been defeated!';
+                var winningPlayerNum = (losingPlayerNum === 1) ? 2 : 1;
+
+                self.game.state.states.End.clientPlayerNum = self.clientPlayerNum;
+                self.game.state.states.End.winningPlayerNum = winningPlayerNum;
                 self.game.state.states.End.turns = turns;
 
                 self.end();
@@ -240,7 +185,7 @@ namespace Game {
                 });
 
                 this.banana++;
-                this.setBananaCounter();
+                this.showBananaCounter();
 
                 graphics = this.add.graphics(100, 100);
                 graphics.beginFill(0xFF3300);
@@ -293,7 +238,7 @@ namespace Game {
 
             this.attacking = true;
             this.banana = 0;
-            this.setBananaCounter();
+            this.showBananaCounter();
 
             this.attackTimer = 11;
             this.attackTimeout(this);
@@ -350,7 +295,6 @@ namespace Game {
             this.palm3.kill();
             this.palm4.kill();
             this.gameIdText.kill();
-            this.playerNumText.kill();
 
             for (m = 0; m < this.minions.length; m++) {
                 minion = this.minions[m];
@@ -367,7 +311,7 @@ namespace Game {
                 clearTimeout(this.timeout);
             }
 
-            this.theme.pause();
+            this.game.state.states.End.theme = this.theme;
 
             this.game.state.start('End');
         }
@@ -394,7 +338,7 @@ namespace Game {
             }
         }
 
-        setBananaCounter() {
+        showBananaCounter() {
             if (this.bananaCounter) {
                 this.bananaCounter.kill();
             }
@@ -404,6 +348,40 @@ namespace Game {
                 0,
                 'Banana Count: ' + (this.config.maxBananas - this.banana.toString()) + ' / ' + this.config.maxBananas,
                 this.fontStyle
+            );
+        }
+
+        showHealth(self) {
+            var health,
+                text;
+
+            if (self.yourHealthText) {
+                self.yourHealthText.kill();
+            }
+
+            self.yourHealthText = self.add.text(
+                10,
+                self.game.height - 40,
+                'Your Health: ' + self.players[self.clientPlayerNum - 1].health + ' / ' + self.config.maxHealth,
+                self.fontStyle
+            );
+
+            if (self.players[0] && self.players[1]) {
+                health = (self.clientPlayerNum === 1) ? self.players[1].health : self.players[0].health;
+                text = 'Opponent\'s Health: ' + health + ' / ' + self.config.maxHealth;
+            } else {
+                text = 'Waiting for Opponent...';
+            }
+
+            if (self.opponentHealthText) {
+                self.opponentHealthText.kill();
+            }
+
+            self.opponentHealthText = self.add.text(
+                self.game.width - 310,
+                self.game.height - 40,
+                text,
+                self.fontStyle
             );
         }
 
