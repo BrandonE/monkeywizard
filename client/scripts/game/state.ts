@@ -5,7 +5,7 @@ namespace Game {
     export class State extends Phaser.State {
         config: { port: number, maxHealth: number, maxBananas: number};
         id: number;
-        players;
+        players: { id: number, playerNum: number, health: number }[];
         clientPlayerNum: number;
         player: Player;
         pointer: Phaser.Pointer;
@@ -28,13 +28,13 @@ namespace Game {
         palm2: Phaser.Image;
         palm3: Phaser.Image;
         palm4: Phaser.Image;
-        minions: Phaser.Sprite[];
-        bananas: Phaser.Sprite[];
+        minions: Generic.Minion[];
+        bananas: Generic.Banana[];
         attackLabels: Phaser.Text[];
         attackGraphics: PIXI.Graphics[];
         timeout;
 
-        create() {
+        create(): void {
             var self = this;
 
             if (!this.theme) {
@@ -82,12 +82,12 @@ namespace Game {
             this.socket = io.connect();
 
             this.socket.on('user connected', function(playerNum, gameSent) {
-                var player,
-                    playerIndex,
-                    minion,
-                    banana,
-                    m,
-                    b;
+                var player: { id: number, playerNum: number, health: number },
+                    playerIndex: number,
+                    minion: Generic.Minion,
+                    banana: Generic.Banana,
+                    m: number,
+                    b: number;
 
                 if (self.id) {
                     if (playerNum) {
@@ -154,8 +154,8 @@ namespace Game {
             });
 
             this.socket.on('user disconnected', function(playerNum) {
-                var winningPlayerNum,
-                    playerIndex;
+                var winningPlayerNum: number,
+                    playerIndex: number;
 
                 if (playerNum) {
                     if (self.players[0] && self.players[1]) {
@@ -184,7 +184,7 @@ namespace Game {
             });
 
             this.socket.on('turn', function(turn) {
-                var waves;
+                var waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][];
 
                 if (self.clientPlayerNum) {
                     waves = turn[self.clientPlayerNum - 1];
@@ -209,7 +209,7 @@ namespace Game {
             });
 
             this.socket.on('player health changed', function(playerNum, health) {
-                var player;
+                var player: { id: number, playerNum: number, health: number };
 
                 if (playerNum) {
                     player = self.players[playerNum - 1];
@@ -220,7 +220,7 @@ namespace Game {
             });
 
             this.socket.on('end', function(losingPlayerNum, turns) {
-                var winningPlayerNum = (losingPlayerNum === 1) ? 2 : 1;
+                var winningPlayerNum: number = (losingPlayerNum === 1) ? 2 : 1;
 
                 self.game.state.states.End.clientPlayerNum = self.clientPlayerNum;
                 self.game.state.states.End.winningPlayerNum = winningPlayerNum;
@@ -230,7 +230,7 @@ namespace Game {
             });
         }
 
-        attack() {
+        attack(): void {
             var angle: { degrees: number, degreesCounterClockwise: number, radians: number },
                 destinationX: number,
                 destinationY: number,
@@ -295,7 +295,7 @@ namespace Game {
             }
         }
 
-        attackStart() {
+        attackStart(): void {
             this.attacking = true;
             this.bananaCount = 0;
             this.showBananaCounter();
@@ -304,15 +304,15 @@ namespace Game {
             this.attackTimeout();
         }
 
-        dodge(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
+        dodge(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]): void {
             var wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
                 banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
-                attackLabel,
-                attackGraphic,
+                attackLabel: Phaser.Text,
+                attackGraphic: PIXI.Graphics,
                 w: number,
                 b: number,
-                al,
-                ag;
+                al: number,
+                ag: number;
 
             for (al = 0; al < this.attackLabels.length; al++) {
                 attackLabel = this.attackLabels[al];
@@ -321,7 +321,7 @@ namespace Game {
 
             for (ag = 0; ag < this.attackGraphics.length; ag++) {
                 attackGraphic = this.attackGraphics[ag];
-                attackGraphic.kill();
+                attackGraphic.clear();
             }
 
             this.attackLabels = [];
@@ -337,7 +337,7 @@ namespace Game {
             }
         }
 
-        dodgeRandom() {
+        dodgeRandom():void {
             var self = this,
                 waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]],
                 xMaxima: number = this.game.width - 280,
@@ -363,11 +363,11 @@ namespace Game {
             }, 5000);
         }
 
-        end() {
-            var minion,
-                banana,
-                m,
-                b;
+        end(): void {
+            var minion: Generic.Minion,
+                banana: Generic.Banana,
+                m: number,
+                b: number;
 
             this.id = null;
             this.players = [null, null];
@@ -409,7 +409,7 @@ namespace Game {
             this.game.state.start('End');
         }
 
-        attackTimeout() {
+        attackTimeout(): void {
             var self = this;
 
             this.attackTimer--;
@@ -433,7 +433,7 @@ namespace Game {
             }
         }
 
-        showBananaCounter() {
+        showBananaCounter(): void {
             if (this.bananaCounter) {
                 this.bananaCounter.kill();
             }
@@ -446,8 +446,8 @@ namespace Game {
             );
         }
 
-        showHealth() {
-            var health;
+        showHealth(): void {
+            var health: number;
 
             if (this.yourHealthText) {
                 this.yourHealthText.kill();
@@ -474,7 +474,9 @@ namespace Game {
             );
         }
 
-        getAngle(x1: number, y1: number, x2: number, y2: number) {
+        getAngle(x1: number, y1: number, x2: number, y2: number): {
+            degrees: number, degreesCounterClockwise: number, radians: number
+        } {
             var playerPoint: Phaser.Point = new Phaser.Point(x1, y1),
                 mousePoint: Phaser.Point = new Phaser.Point(x2, y2),
                 angleDegrees: number = playerPoint.angle(mousePoint, true),
@@ -498,7 +500,7 @@ namespace Game {
             banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
             waveIndex: number,
             bananaIndex: number
-        ) {
+        ): void {
             var angle: { degrees: number, degreesCounterClockwise: number, radians: number },
                 x: number,
                 y: number;

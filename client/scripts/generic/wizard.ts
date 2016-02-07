@@ -12,8 +12,8 @@ namespace Generic {
         keySpeed: number;
 
         constructor(state: Phaser.State) {
-            var x = state.stage.width / 2,
-                y = state.stage.height / 2;
+            var x: number = state.stage.width / 2,
+                y: number = state.stage.height / 2;
 
             super(state.game, x, y, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
 
@@ -42,9 +42,9 @@ namespace Generic {
         }
 
         move(): void {
-
             // Touch
-            var distance = Phaser.Point.distance(this, this.destination, true);
+            var distance: number = Phaser.Point.distance(this, this.destination, true);
+
             if (distance > 30) {
                 this.game.physics.arcade.moveToXY(this, this.destination.x, this.destination.y, this.speed);
             } else {

@@ -15,7 +15,7 @@ namespace Menu {
         banana2R: Phaser.Sprite;
         banana3R: Phaser.Sprite;
 
-        create() {
+        create(): void {
             this.background = this.game.add.sprite(0, 0, 'backdrop');
 
             this.title = this.game.add.text(
@@ -104,7 +104,7 @@ namespace Menu {
             this.banana3R.anchor.setTo(0.5);
         }
 
-        update() {
+        update(): void {
             this.banana1L.angle += 1;
             this.banana2L.angle += 2;
             this.banana3L.angle += 3;

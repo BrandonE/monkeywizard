@@ -12,10 +12,10 @@ namespace End {
         menu: Phaser.Text;
         turns;
 
-        create() {
+        create(): void {
             var self = this,
-                win = (this.clientPlayerNum === this.winningPlayerNum),
-                message;
+                win: boolean = (this.clientPlayerNum === this.winningPlayerNum),
+                message: string;
 
             if (win) {
                 if (this.turns) {
@@ -83,7 +83,7 @@ namespace End {
             }, this);
         }
 
-        killAssets() {
+        killAssets(): void {
             this.background.kill();
             this.results.kill();
             this.playAgain.kill();

@@ -29,7 +29,7 @@ namespace Generic {
             }, 5000 - (self.bananaIndex * 100));
         }
 
-        update() {
+        update(): void {
             this.angle += 5;
 
             if (
@@ -51,9 +51,9 @@ namespace Generic {
             }
         }
 
-        checkOverlap(spriteA, spriteB) {
-            var boundsA = spriteA.getBounds(),
-                boundsB = spriteB.getBounds();
+        checkOverlap(spriteA, spriteB): boolean {
+            var boundsA: Phaser.Rectangle = spriteA.getBounds(),
+                boundsB: Phaser.Rectangle = spriteB.getBounds();
 
             boundsB.width = boundsB.width / 2;
             boundsB.height = boundsB.height / 2;

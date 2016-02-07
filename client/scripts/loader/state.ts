@@ -3,7 +3,7 @@
 
 namespace Loader {
     export class State extends Phaser.State {
-        preload() {
+        preload(): void {
             this.load.atlasJSONHash('sprites', 'assets/images/sprites.png', 'assets/images/sprites.json');
             this.load.json('config', 'assets/config.json');
             this.load.image('backdrop', 'assets/images/backdrop.jpg');
@@ -12,7 +12,7 @@ namespace Loader {
             this.load.audio('fanfare', ['assets/sound/fanfare.ogg', 'assets/sound/fanfare.m4a']);
         }
 
-        create() {
+        create(): void {
             console.log('Loading complete');
             this.game.state.start('Menu');
         }
