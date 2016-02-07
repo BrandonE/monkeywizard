@@ -3,7 +3,7 @@
 
 namespace Generic {
     export class Banana extends Phaser.Sprite {
-        killed: boolean = false;
+        killed: boolean;
         waveIndex: number;
         bananaIndex: number;
 
@@ -36,17 +36,18 @@ namespace Generic {
                 !this.killed && this.game.state.states.Game.id &&
                     this.checkOverlap(this, this.game.state.states.Game.player)
             ) {
-                this.killed = true;
-
-                this.game.state.states.Game.socket.emit(
-                    'player hit',
-                    this.waveIndex,
-                    this.bananaIndex,
-                    this.game.state.states.Game.player.x,
-                    this.game.state.states.Game.player.y
-                );
+                if (this.game.state.states.Game.players[0] && this.game.state.states.Game.players[1]) {
+                    this.game.state.states.Game.socket.emit(
+                        'player hit',
+                        this.waveIndex,
+                        this.bananaIndex,
+                        this.game.state.states.Game.player.x,
+                        this.game.state.states.Game.player.y
+                    );
+                }
 
                 this.kill();
+                this.killed = true;
             }
         }
 

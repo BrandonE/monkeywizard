@@ -25,8 +25,10 @@ namespace Generic {
 
             setTimeout(function() {
                 if (!self.killed && self.game.state.states.Game.id) {
-                    self.game.state.states.Game.game.add.existing(
-                        new Generic.Banana(state, waveIndex, bananaIndex, x, y, player_x, player_y)
+                    self.game.state.states.Game.bananas.push(
+                        self.game.state.states.Game.game.add.existing(
+                            new Generic.Banana(state, waveIndex, bananaIndex, x, y, player_x, player_y)
+                        )
                     );
                 }
             }, bananaIndex * 100);

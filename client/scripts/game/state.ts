@@ -12,7 +12,7 @@ namespace Game {
         waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][];
         attacking: boolean;
         attackTimer: number;
-        banana: number;
+        bananaCount: number;
         io: SocketIOClientStatic;
         socket: SocketIOClient.Socket;
         theme: Phaser.Sound;
@@ -21,6 +21,7 @@ namespace Game {
         gameStatusText : Phaser.Text;
         yourHealthText: Phaser.Text;
         opponentHealthText: Phaser.Text;
+        waitingForOpponentText: Phaser.Text;
         bananaCounter: Phaser.Text;
         background: Phaser.Image;
         palm1: Phaser.Image;
@@ -28,6 +29,7 @@ namespace Game {
         palm3: Phaser.Image;
         palm4: Phaser.Image;
         minions: Phaser.Sprite[];
+        bananas: Phaser.Sprite[];
         attackLabels: Phaser.Text[];
         attackGraphics: PIXI.Graphics[];
         timeout;
@@ -75,12 +77,17 @@ namespace Game {
             this.attackGraphics = [];
             this.attackLabels = [];
             this.minions = [];
+            this.bananas = [];
 
             this.socket = io.connect();
 
             this.socket.on('user connected', function(playerNum, gameSent) {
                 var player,
-                    playerIndex;
+                    playerIndex,
+                    minion,
+                    banana,
+                    m,
+                    b;
 
                 if (self.id) {
                     if (playerNum) {
@@ -101,10 +108,48 @@ namespace Game {
                     self.gameIdText = self.add.text(10, 0, 'Game ID: ' + self.id, Generic.Fonts.fontStyle);
                 }
 
-                self.showHealth();
-
                 if (self.players[0] && self.players[1]) {
+                    if (self.timeout) {
+                        clearTimeout(self.timeout);
+                    }
+
+                    if (self.waitingForOpponentText) {
+                        self.waitingForOpponentText.kill();
+                    }
+
+                    for (m = 0; m < self.minions.length; m++) {
+                        minion = self.minions[m];
+
+                        if (minion) {
+                            minion.kill();
+                            minion.killed = true;
+                        }
+                    }
+
+                    for (b = 0; b < self.bananas.length; b++) {
+                        banana = self.bananas[b];
+
+                        if (banana) {
+                            banana.kill();
+                            banana.killed = true;
+                        }
+                    }
+
+                    self.showHealth();
                     self.attackStart();
+                } else {
+                    if (self.waitingForOpponentText) {
+                        self.waitingForOpponentText.kill();
+                    }
+
+                    self.waitingForOpponentText = self.add.text(
+                        (self.game.width / 2) - 130,
+                        self.game.height / 2,
+                        'Waiting for Opponent...',
+                        Generic.Fonts.fontStyle
+                    );
+
+                    self.dodgeRandom();
                 }
             });
 
@@ -143,7 +188,23 @@ namespace Game {
 
                 if (self.clientPlayerNum) {
                     waves = turn[self.clientPlayerNum - 1];
+
+                    if (self.gameStatusText) {
+                        self.gameStatusText.kill();
+                    }
+
+                    self.gameStatusText = self.add.text(
+                        self.game.width - 690,
+                        self.game.height - 40,
+                        'Dodge!',
+                        Generic.Fonts.fontStyle
+                    );
+
                     self.dodge(waves);
+
+                    self.timeout = setTimeout(function() {
+                        self.attackStart();
+                    }, 5000);
                 }
             });
 
@@ -175,7 +236,7 @@ namespace Game {
                 destinationY: number,
                 graphics: Phaser.Graphics;
 
-            if (this.banana < this.config.maxBananas) {
+            if (this.bananaCount < this.config.maxBananas) {
                 angle = this.getAngle(this.player.x, this.player.y, this.pointer.x, this.pointer.y);
 
                 this.waves[0].push({
@@ -185,7 +246,7 @@ namespace Game {
                     pointer_y: this.pointer.y
                 });
 
-                this.banana++;
+                this.bananaCount++;
                 this.showBananaCounter();
 
                 graphics = this.add.graphics(100, 100);
@@ -229,14 +290,14 @@ namespace Game {
                 );
 
                 this.attackLabels.push(
-                    this.add.text(this.player.x - 10, this.player.y, this.banana.toString(), {})
+                    this.add.text(this.player.x - 10, this.player.y, this.bananaCount.toString(), {})
                 );
             }
         }
 
         attackStart() {
             this.attacking = true;
-            this.banana = 0;
+            this.bananaCount = 0;
             this.showBananaCounter();
 
             this.attackTimer = 11;
@@ -244,19 +305,7 @@ namespace Game {
         }
 
         dodge(waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][]) {
-            if (this.gameStatusText) {
-                this.gameStatusText.kill();
-            }
-
-            this.gameStatusText = this.add.text(
-                this.game.width - 690,
-                this.game.height - 40,
-                'Dodge!',
-                Generic.Fonts.fontStyle
-            );
-
-            var self = this,
-                wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
+            var wave: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[],
                 banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
                 attackLabel,
                 attackGraphic,
@@ -265,18 +314,18 @@ namespace Game {
                 al,
                 ag;
 
-            for (al = 0; al < self.attackLabels.length; al++) {
-                attackLabel = self.attackLabels[al];
+            for (al = 0; al < this.attackLabels.length; al++) {
+                attackLabel = this.attackLabels[al];
                 attackLabel.kill();
             }
 
-            for (ag = 0; ag < self.attackGraphics.length; ag++) {
-                attackGraphic = self.attackGraphics[ag];
+            for (ag = 0; ag < this.attackGraphics.length; ag++) {
+                attackGraphic = this.attackGraphics[ag];
                 attackGraphic.kill();
             }
 
-            self.attackLabels = [];
-            self.attackGraphics = [];
+            this.attackLabels = [];
+            this.attackGraphics = [];
 
             for (w = 0; w < waves.length; w++) {
                 wave = waves[w];
@@ -286,15 +335,39 @@ namespace Game {
                     this.addMinion(banana, w, b);
                 }
             }
+        }
+
+        dodgeRandom() {
+            var self = this,
+                waves: { player_x: number, player_y: number, pointer_x: number, pointer_y: number }[][] = [[]],
+                xMaxima: number = this.game.width - 280,
+                yMaxima: number = this.game.height - 185,
+                banana: { player_x: number, player_y: number, pointer_x: number, pointer_y: number },
+                b: number;
+
+            for (b = 0; b < this.config.maxBananas; b++) {
+                banana = {
+                    player_x  : (Math.random() * xMaxima) + 280,
+                    player_y  : (Math.random() * yMaxima) + 125,
+                    pointer_x : (Math.random() * xMaxima) + 280,
+                    pointer_y : (Math.random() * yMaxima) + 125
+                };
+
+                waves[0].push(banana);
+            }
+
+            this.dodge(waves);
 
             this.timeout = setTimeout(function() {
-                self.attackStart();
+                self.dodgeRandom();
             }, 5000);
         }
 
         end() {
             var minion,
-                m;
+                banana,
+                m,
+                b;
 
             this.id = null;
             this.players = [null, null];
@@ -307,13 +380,23 @@ namespace Game {
             this.palm3.kill();
             this.palm4.kill();
             this.gameIdText.kill();
+            this.waitingForOpponentText.kill();
 
             for (m = 0; m < this.minions.length; m++) {
                 minion = this.minions[m];
 
                 if (minion) {
-                    minion.killed = true;
                     minion.kill();
+                    minion.killed = true;
+                }
+            }
+
+            for (b = 0; b < this.bananas.length; b++) {
+                banana = this.bananas[b];
+
+                if (banana) {
+                    banana.kill();
+                    banana.killed = true;
                 }
             }
 
@@ -358,14 +441,13 @@ namespace Game {
             this.bananaCounter = this.add.text(
                 this.game.width - 290,
                 0,
-                'Banana Count: ' + (this.config.maxBananas - this.banana) + ' / ' + this.config.maxBananas,
+                'Banana Count: ' + (this.config.maxBananas - this.bananaCount) + ' / ' + this.config.maxBananas,
                 Generic.Fonts.fontStyle
             );
         }
 
         showHealth() {
-            var health,
-                text;
+            var health;
 
             if (this.yourHealthText) {
                 this.yourHealthText.kill();
@@ -378,21 +460,16 @@ namespace Game {
                 Generic.Fonts.fontStyle
             );
 
-            if (this.players[0] && this.players[1]) {
-                health = (this.clientPlayerNum === 1) ? this.players[1].health : this.players[0].health;
-                text = 'Opponent\'s Health: ' + health + ' / ' + this.config.maxHealth;
-            } else {
-                text = 'Waiting for Opponent...';
-            }
-
             if (this.opponentHealthText) {
                 this.opponentHealthText.kill();
             }
 
+            health = (this.clientPlayerNum === 1) ? this.players[1].health : this.players[0].health;
+
             this.opponentHealthText = this.add.text(
                 this.game.width - 310,
                 this.game.height - 40,
-                text,
+                'Opponent\'s Health: ' + health + ' / ' + this.config.maxHealth,
                 Generic.Fonts.fontStyle
             );
         }
