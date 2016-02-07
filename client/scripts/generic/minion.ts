@@ -5,22 +5,22 @@ namespace Generic {
     export class Minion extends Phaser.Sprite {
         waveIndex: number;
         bananaIndex: number;
-        x: number;
-        y: number;
+        banana_x: number;
+        banana_y: number;
         player_x: number;
         player_y: number;
         killed: boolean = false;
 
         constructor(
-            state: Phaser.State, waveIndex: number, bananaIndex: number, x: number, y: number, player_x: number,
+            state: Phaser.State, waveIndex: number, bananaIndex: number, banana_x: number, banana_y: number, player_x: number,
             player_y: number
         ) {
             super(
                 state.game,
-                x - 50,
-                y - 20,
+                banana_x - 50,
+                banana_y - 20,
                 'sprites',
-                'Monkey_Minion/' + ((y > state.game.height / 2) ? 'Back' : 'Front') +
+                'Monkey_Minion/' + ((banana_y > state.game.height / 2) ? 'Back' : 'Front') +
                     '/Monkey_Minion_1Y'
             );
 
@@ -28,8 +28,8 @@ namespace Generic {
 
             this.waveIndex = waveIndex;
             this.bananaIndex = bananaIndex;
-            this.x = x;
-            this.y = y;
+            this.banana_x = banana_x;
+            this.banana_y = banana_y;
             this.player_x = player_x;
             this.player_y = player_y;
 
@@ -49,7 +49,7 @@ namespace Generic {
         secondFrame() {
             var self = this;
 
-            this.frameName = 'Monkey_Minion/' + ((this.y > this.game.height / 2) ? 'Back' : 'Front') +
+            this.frameName = 'Monkey_Minion/' + ((this.banana_y > this.game.height / 2) ? 'Back' : 'Front') +
                 '/Monkey_Minion_2Y';
 
             setTimeout(function() {
@@ -58,7 +58,7 @@ namespace Generic {
         }
 
         thirdFrame() {
-            this.frameName = 'Monkey_Minion/' + ((this.y > this.game.height / 2) ? 'Back' : 'Front') +
+            this.frameName = 'Monkey_Minion/' + ((this.banana_y > this.game.height / 2) ? 'Back' : 'Front') +
                 '/Monkey_Minion_3';
 
             if (!this.killed && this.game.state.states.Game.id) {
@@ -68,8 +68,8 @@ namespace Generic {
                             this.game.state.states.Game,
                             this.waveIndex,
                             this.bananaIndex,
-                            this.x,
-                            this.y,
+                            this.banana_x,
+                            this.banana_y,
                             this.player_x,
                             this.player_y
                         )
