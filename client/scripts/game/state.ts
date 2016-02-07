@@ -380,7 +380,10 @@ namespace Game {
             this.palm3.kill();
             this.palm4.kill();
             this.gameIdText.kill();
-            this.waitingForOpponentText.kill();
+
+            if (this.waitingForOpponentText) {
+                this.waitingForOpponentText.kill();
+            }
 
             for (m = 0; m < this.minions.length; m++) {
                 minion = this.minions[m];
