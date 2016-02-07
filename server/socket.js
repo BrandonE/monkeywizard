@@ -32,7 +32,10 @@ module.exports = function(config) {
 
                 socket.on('player attack', function(attack) {
                     var player = game.getPlayerById(socket.id);
-                    game.attack(attack, player.getPlayerNum());
+
+                    if (player && player.getHealth()) {
+                        game.attack(attack, player.getPlayerNum());
+                    }
                 });
 
                 socket.on('player hit', function(waveIndex, bananaIndex, x, y) {
