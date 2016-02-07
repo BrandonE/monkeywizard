@@ -45,7 +45,7 @@ namespace Game {
                 }, this);
             }
 
-            this.background = this.add.image(0, 0, 'sprites', 'Aztec Temple/Aztec-Temple');
+            this.background = this.add.image(0, 0, 'temple');
             this.background.height = this.game.height;
             this.background.width = this.game.width;
 
