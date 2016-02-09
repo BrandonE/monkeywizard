@@ -18,7 +18,7 @@ namespace Generic {
         ) {
             super(state.game, null, null, 'sprites');
 
-            if (banana_y <= state.game.height / 2) {
+            if (banana_y <= player_y) {
                 this.side = 'Front';
                 this.x = banana_x - 45;
                 this.y = banana_y - 25;
