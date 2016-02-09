@@ -25,6 +25,22 @@ namespace Generic {
             this.anchor.setTo(0.5);
             this.game.physics.arcade.enable(this);
             this.body.allowRotation = false;
+
+            this.wasd.left.onDown.add(function() {
+                self.wasd.right.isDown = false;
+            });
+
+            this.wasd.right.onDown.add(function() {
+                self.wasd.left.isDown = false;
+            });
+
+            this.wasd.up.onDown.add(function() {
+                self.wasd.down.isDown = false;
+            });
+
+            this.wasd.down.onDown.add(function() {
+                self.wasd.up.isDown = false;
+            });
         }
 
         update(): void {
