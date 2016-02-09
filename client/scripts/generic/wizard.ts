@@ -12,10 +12,11 @@ namespace Generic {
         keySpeed: number;
 
         constructor(state: Phaser.State) {
-            var x: number = state.stage.width / 2,
-                y: number = state.stage.height / 2;
+            super(
+                state.game, state.stage.width / 2, state.stage.height / 2, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1'
+            );
 
-            super(state.game, x, y, 'sprites', 'Monkey_Wizard/Monkey_Wizard_1');
+            var self = this;
 
             this.state = state;
             this.wasd = new Generic.WASD(state.game);
