@@ -32,7 +32,8 @@ namespace Game {
         bananas: Generic.Banana[];
         attackLabels: Phaser.Text[];
         attackGraphics: PIXI.Graphics[];
-        timeout;
+        gameStatusTimeout;
+        hitTimeout;
 
         create(): void {
             var self = this;
@@ -109,8 +110,8 @@ namespace Game {
                 }
 
                 if (self.players[0] && self.players[1]) {
-                    if (self.timeout) {
-                        clearTimeout(self.timeout);
+                    if (self.gameStatusTimeout) {
+                        clearTimeout(self.gameStatusTimeout);
                     }
 
                     if (self.waitingForOpponentText) {
@@ -202,7 +203,7 @@ namespace Game {
 
                     self.dodge(waves);
 
-                    self.timeout = setTimeout(function() {
+                    self.gameStatusTimeout = setTimeout(function() {
                         self.attackStart();
                     }, 5000);
                 }
@@ -358,7 +359,7 @@ namespace Game {
 
             this.dodge(waves);
 
-            this.timeout = setTimeout(function() {
+            this.gameStatusTimeout = setTimeout(function() {
                 self.dodgeRandom();
             }, 5000);
         }
@@ -405,8 +406,8 @@ namespace Game {
 
             this.socket.close();
 
-            if (this.timeout) {
-                clearTimeout(this.timeout);
+            if (this.gameStatusTimeout) {
+                clearTimeout(this.gameStatusTimeout);
             }
 
             this.game.state.start('End');
@@ -426,7 +427,7 @@ namespace Game {
                     self.game.width - 690, self.game.height - 40, 'Attack! ' + self.attackTimer, Generic.Fonts.fontStyle
                 );
 
-                this.timeout = setTimeout(function() {
+                this.gameStatusTimeout = setTimeout(function() {
                     self.attackTimeout();
                 }, 1000);
             } else {

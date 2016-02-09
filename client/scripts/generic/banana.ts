@@ -30,6 +30,8 @@ namespace Generic {
         }
 
         update(): void {
+            var self = this;
+
             this.angle += 5;
 
             if (
@@ -44,6 +46,20 @@ namespace Generic {
                         this.game.state.states.Game.player.x,
                         this.game.state.states.Game.player.y
                     );
+                }
+
+                if (this.game.state.states.Game.player) {
+                    this.game.state.states.Game.player.frameName = 'Monkey_Wizard/Monkey_Wizard_2';
+
+                    if (this.game.state.states.Game.hitTimeout) {
+                        clearTimeout(this.game.state.states.Game.hitTimeout);
+                    }
+
+                    this.game.state.states.Game.hitTimeout = setTimeout(function() {
+                        if (self.game.state.states.Game.player) {
+                            self.game.state.states.Game.player.frameName = 'Monkey_Wizard/Monkey_Wizard_1';
+                        }
+                    }, 500);
                 }
 
                 this.kill();
