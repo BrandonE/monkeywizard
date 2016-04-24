@@ -8,6 +8,7 @@ namespace Boot {
             this.game.scale.pageAlignHorizontally = true;
             this.game.scale.pageAlignVertically = true;
             this.game.scale.refresh();
+            this.game.stage.disableVisibilityChange = true;
         }
 
         create(): void {
